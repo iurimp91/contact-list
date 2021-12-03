@@ -18,7 +18,7 @@ function App(): JSX.Element {
           CONTACT LIST
         </Typography>
       </AppBar>
-      <Container sx={{ mt: "20px" }}>
+      <Container sx={{ mt: "40px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<ContactPage />} />
