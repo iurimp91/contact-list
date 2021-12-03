@@ -1,7 +1,18 @@
 import { AppBar, Typography, Box, Container } from "@mui/material";
 import { ContactPage } from "@mui/icons-material";
+import { ReactNode } from "react";
 
-function ContactCard(): JSX.Element {
+const contactList = [
+  { name: "Iuri Magnago Pinto" },
+  { name: "José Carlos Andrade" },
+  { name: "Rafaela Marin Souza" },
+];
+
+interface ContactProps {
+  children: ReactNode;
+}
+
+function ContactCard({ children }: ContactProps): JSX.Element {
   return (
     <Box
       sx={{
@@ -10,12 +21,11 @@ function ContactCard(): JSX.Element {
         borderRadius: "10px",
         display: "flex",
         alignItems: "center",
+        mb: "20px"
       }}
     >
       <ContactPage sx={{ fontSize: "40px" }} />
-      <Typography sx={{ fontSize: "23px", ml: "15px" }}>
-        Iuri Magnago Pinto
-      </Typography>
+      <Typography sx={{ fontSize: "23px", ml: "15px" }}>{children}</Typography>
     </Box>
   );
 }
@@ -29,7 +39,9 @@ function App(): JSX.Element {
         </Typography>
       </AppBar>
       <Container sx={{ mt: "20px" }}>
-        <ContactCard />
+        {contactList.map(({ name }) => (
+          <ContactCard key={name}>{name}</ContactCard>
+        ))}
       </Container>
     </>
   );
