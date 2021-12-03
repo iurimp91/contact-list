@@ -1,5 +1,5 @@
 import { AppBar, Typography, Box, Container } from "@mui/material";
-import { ContactPage } from "@mui/icons-material";
+import { ContactPageOutlined } from "@mui/icons-material";
 import { ReactNode } from "react";
 
 const contactList = [
@@ -17,14 +17,17 @@ function ContactCard({ children }: ContactProps): JSX.Element {
     <Box
       sx={{
         height: "50px",
-        border: "1px solid #6AEFAB",
+        backgroundColor: "#EDEDED",
         borderRadius: "10px",
         display: "flex",
         alignItems: "center",
-        mb: "20px"
+        mb: "20px",
+        ":hover": {
+          backgroundColor: "#DBDBDB"
+        }
       }}
     >
-      <ContactPage sx={{ fontSize: "40px" }} />
+      <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
       <Typography sx={{ fontSize: "23px", ml: "15px" }}>{children}</Typography>
     </Box>
   );
@@ -32,9 +35,16 @@ function ContactCard({ children }: ContactProps): JSX.Element {
 
 function App(): JSX.Element {
   return (
-    <>
-      <AppBar position="static" sx={{ padding: "10px" }}>
-        <Typography variant="h4" textAlign="center">
+    <Box sx={{ backgroundColor: "#FAFAFA" }}>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "#FFFFFF",
+        }}
+      >
+        <Typography
+          sx={{ color: "#000000", textAlign: "center", fontSize: "32px" }}
+        >
           CONTACT LIST
         </Typography>
       </AppBar>
@@ -43,7 +53,7 @@ function App(): JSX.Element {
           <ContactCard key={name}>{name}</ContactCard>
         ))}
       </Container>
-    </>
+    </Box>
   );
 }
 
