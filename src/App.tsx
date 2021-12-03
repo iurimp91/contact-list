@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { AppBar, Typography, Box, Container } from "@mui/material";
 import Home from "./pages/Home";
+import ContactPage from "./pages/ContactPage";
 
 function App(): JSX.Element {
   return (
@@ -20,6 +21,7 @@ function App(): JSX.Element {
       <Container sx={{ mt: "20px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </Container>
     </Box>
