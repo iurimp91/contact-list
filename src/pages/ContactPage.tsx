@@ -1,5 +1,10 @@
 import { Box, Typography } from "@mui/material";
-import { PersonOutlineOutlined, EmailOutlined, CakeOutlined } from "@mui/icons-material";
+import {
+  PersonOutlineOutlined,
+  EmailOutlined,
+  CakeOutlined,
+  HomeOutlined,
+} from "@mui/icons-material";
 
 const contactData = {
   name: "Iuri Magnago Pinto",
@@ -36,6 +41,24 @@ export default function ContactPage(): JSX.Element {
           {contactData.birth}
         </Typography>
       </Box>
+      <Box display="flex" alignItems="center" mt="30px">
+        <HomeOutlined sx={{ fontSize: "40px", color: "#ED75EF" }} />
+        <Typography sx={{ fontSize: "25px", color: "#000000", ml: "10px" }}>
+          ADDRESS
+        </Typography>
+      </Box>
+      <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
+        {contactData.address.street}, {contactData.address.number}
+      </Typography>
+      <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
+        {contactData.address.cep}
+      </Typography>
+      <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
+        {contactData.address.city}/{contactData.address.state}
+      </Typography>
+      <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
+        Complement: {contactData.address.complement}
+      </Typography>
     </>
   );
 }
