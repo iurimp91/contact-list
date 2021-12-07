@@ -19,7 +19,20 @@ export default function Form(): JSX.Element {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    console.log(name, email, birthday);
+    const contact = {
+      name,
+      email,
+      birthday,
+      cep: cep.replace("-", ""),
+      street,
+      number,
+      complement,
+      city,
+      state
+    };
+
+    console.log(contact);
+    localStorage.setItem(contact.email, JSON.stringify(contact));
   }
 
   return (
