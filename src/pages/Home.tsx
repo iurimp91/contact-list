@@ -1,12 +1,7 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Typography, Box } from "@mui/material";
 import { ContactPageOutlined } from "@mui/icons-material";
-
-const contactList = [
-  { name: "Iuri Magnago Pinto" },
-  { name: "José Carlos Andrade" },
-  { name: "Rafaela Marin Souza" },
-];
+import Contact from "../interfaces/Contact";
 
 interface ContactCardProps {
   children: ReactNode;
@@ -34,11 +29,19 @@ function ContactCard({ children }: ContactCardProps): JSX.Element {
 }
 
 export default function Home(): JSX.Element {
+  const [contactList, setContactList] = useState<Contact[] | null>(null);
+
+  useEffect(() => {
+    setContactList(JSON.parse(localStorage.getItem("contacts") || "null"));
+  }, []);
+
   return (
     <>
-      {contactList.map(({ name }) => (
-        <ContactCard key={name}>{name}</ContactCard>
-      ))}
+      {contactList
+        ? contactList.map(({ name }) => (
+          <ContactCard key={name}>{name}</ContactCard>
+        ))
+        : "No contacts yet"}
     </>
   );
 }

@@ -32,9 +32,13 @@ export default function Form(): JSX.Element {
     };
 
     if(localStorage.getItem("contacts") === null) {
+      // eslint-disable-next-line no-console
+      console.log(JSON.parse(localStorage.getItem("contacts") || "null"));
+      // eslint-disable-next-line no-console
+      console.log(null);
       localStorage.setItem("contacts", JSON.stringify([newContact]));
     } else {
-      const previousData: Contact[] = JSON.parse(localStorage.getItem("contacts") || "");
+      const previousData: Contact[] = JSON.parse(localStorage.getItem("contacts") || "null");
       localStorage.setItem("contacts", JSON.stringify([...previousData, newContact]));
     }
     
