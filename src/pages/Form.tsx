@@ -1,10 +1,10 @@
-/* eslint-disable no-console */
 import { Stack, TextField, Button, TextFieldProps } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import InputMask from "react-input-mask";
 import React, { useState } from "react";
+import Contact from "../interfaces/Contact";
 
 export default function Form(): JSX.Element {
   const [name, setName] = useState<string>("");
@@ -19,7 +19,7 @@ export default function Form(): JSX.Element {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const contact = {
+    const newContact = {
       name,
       email,
       birthday,
@@ -31,8 +31,13 @@ export default function Form(): JSX.Element {
       state
     };
 
-    console.log(contact);
-    localStorage.setItem(contact.email, JSON.stringify(contact));
+    if(localStorage.getItem("contacts") === null) {
+      localStorage.setItem("contacts", JSON.stringify([newContact]));
+    } else {
+      const previousData: Contact[] = JSON.parse(localStorage.getItem("contacts") || "");
+      localStorage.setItem("contacts", JSON.stringify([...previousData, newContact]));
+    }
+    
   }
 
   return (

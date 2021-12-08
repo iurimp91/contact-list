@@ -21,7 +21,6 @@
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
-    "semi": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "arrow-body-style": ["error", "as-needed"],
     "eqeqeq": ["error"],
@@ -29,6 +28,8 @@
     "no-multiple-empty-lines": ["error", { "max": 1 }],
     "no-duplicate-imports": ["error"],
     "no-console": ["error"],
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": ["error", "always"],
+    "semi": "off",
+    "@typescript-eslint/semi": ["error"]
   }
 }
