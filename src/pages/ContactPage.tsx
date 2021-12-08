@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import {
   PersonOutlineOutlined,
@@ -5,40 +7,36 @@ import {
   CakeOutlined,
   HomeOutlined,
 } from "@mui/icons-material";
-
-const contactData = {
-  name: "Iuri Magnago Pinto",
-  email: "henrique.weaver@pagaleve.com",
-  birth: "11/06/1991",
-  address: {
-    cep: "29846-267",
-    street: "Rua Muito Legal e Bacana",
-    number: 37,
-    complement: "Bacana De Novo",
-    city: "Far Far Away",
-    state: "ES",
-  },
-};
+import Contact from "../interfaces/Contact";
 
 export default function ContactPage(): JSX.Element {
+  const [contact, setContact] = useState<Contact>();
+  const { email } = useParams();
+
+  useEffect(() => {
+    const contactList: Contact[] = JSON.parse(localStorage.getItem("contacts") || "null");
+    const contactData = contactList.filter((contact) => contact.email === email)[0];
+    setContact(contactData);
+  }, []);
+
   return (
     <>
       <Box display="flex" alignItems="center" mb="15px">
         <PersonOutlineOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
         <Typography sx={{ fontSize: "25px", color: "#000000", ml: "10px" }}>
-          {contactData.name}
+          {contact?.name}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mb="15px">
         <EmailOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
         <Typography sx={{ fontSize: "20px", color: "#000000", ml: "10px" }}>
-          {contactData.email}
+          {contact?.email}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mb="15px">
         <CakeOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
         <Typography sx={{ fontSize: "20px", color: "#000000", ml: "10px" }}>
-          {contactData.birth}
+          {contact?.birthday}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mt="30px">
@@ -48,16 +46,16 @@ export default function ContactPage(): JSX.Element {
         </Typography>
       </Box>
       <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
-        {contactData.address.street}, {contactData.address.number}
+        {contact?.street}, {contact?.number}
       </Typography>
       <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
-        {contactData.address.cep}
+        {contact?.cep}
       </Typography>
       <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
-        {contactData.address.city}/{contactData.address.state}
+        {contact?.city}/{contact?.state}
       </Typography>
       <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
-        Complement: {contactData.address.complement}
+        Complement: {contact?.complement}
       </Typography>
     </>
   );
