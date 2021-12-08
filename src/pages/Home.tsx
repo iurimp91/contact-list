@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Typography, Box } from "@mui/material";
 import { ContactPageOutlined } from "@mui/icons-material";
 
@@ -31,6 +31,18 @@ function ContactCard({ children }: ContactCardProps): JSX.Element {
       <Typography sx={{ fontSize: "23px", ml: "15px" }}>{children}</Typography>
     </Box>
   );
+}
+
+interface Contact {
+  name: string,
+  email: string,
+  birthday: string,
+  cep: string,
+  street: string,
+  number: string,
+  complement: string,
+  city: string,
+  state: string
 }
 
 export default function Home(): JSX.Element {
