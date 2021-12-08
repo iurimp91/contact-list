@@ -22,7 +22,7 @@ function App(): JSX.Element {
       <Container sx={{ mt: "40px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/contact/:email" element={<ContactPage />} />
           <Route path="/form" element={<Form />} />
         </Routes>
       </Container>

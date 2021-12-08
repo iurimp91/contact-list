@@ -8,4 +8,4 @@ export default interface Contact {
   complement: string;
   city: string;
   state: string;
-};
+}
