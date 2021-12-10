@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Stack, TextField, Button, TextFieldProps } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
@@ -6,7 +5,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import InputMask from "react-input-mask";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Contact from "../interfaces/Contact";
 
 export default function Form(): JSX.Element {
@@ -20,13 +19,10 @@ export default function Form(): JSX.Element {
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
   const { contactEmail } = useParams();
-  console.log(contactEmail);
-  console.log(number);
-  console.log(cep);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (cep.includes("_") || cep === "") {
-      console.log("entrou no if de resetar endereo caso cep esteja vazio");
       resetAddressInputs();
       return;
     }
@@ -53,7 +49,6 @@ export default function Form(): JSX.Element {
 
   useEffect(() => {
     if (!contactEmail) return;
-    console.log("entrou para setar contato existente");
 
     const contactList: Contact[] = JSON.parse(
       localStorage.getItem("contacts") || "null"
@@ -61,7 +56,6 @@ export default function Form(): JSX.Element {
     const contactData = contactList.filter(
       (contact) => contact.email === contactEmail
     )[0];
-    console.log(contactData);
     setName(contactData.name);
     setEmail(contactData.email);
     setBirthday(contactData.birthday);
@@ -119,6 +113,8 @@ export default function Form(): JSX.Element {
         JSON.stringify([...arrayWithoutContact, newContact])
       );
     }
+
+    navigate("/");
   }
 
   return (
