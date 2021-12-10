@@ -5,11 +5,22 @@ import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
 
 export default function Home(): JSX.Element {
-  const [contactList, setContactList] = useState<Contact[] | null>(null);
+  const [contacts, setContacts] = useState<Contact[] | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setContactList(JSON.parse(localStorage.getItem("contacts") || "null"));
+    const contactsList: Contact[] = JSON.parse(localStorage.getItem("contacts") || "null");
+
+    contactsList.sort((a: Contact, b: Contact) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+      return 0;
+    });
+    
+    setContacts(contactsList);
   }, []);
 
   return (
@@ -22,8 +33,8 @@ export default function Home(): JSX.Element {
       >
         ADD NEW
       </Button>
-      {contactList
-        ? contactList.map(({ name, email }) => (
+      {contacts
+        ? contacts.map(({ name, email }) => (
           <Box
             key={email}
             sx={{
