@@ -110,13 +110,14 @@ export default function Form(): JSX.Element {
         localStorage.getItem("contacts") || "null"
       );
 
-      const contactData = contactList.filter(
-        (contact) => contact.email === contactEmail
-      )[0];
+      const arrayWithoutContact = contactList.filter(
+        (contact) => contact.email !== contactEmail
+      );
 
-      const contactIndex = contactList.indexOf(contactData);
-
-      console.log(contactIndex);
+      localStorage.setItem(
+        "contacts",
+        JSON.stringify([...arrayWithoutContact, newContact])
+      );
     }
   }
 
