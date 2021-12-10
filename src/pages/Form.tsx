@@ -25,36 +25,6 @@ export default function Form(): JSX.Element {
   console.log(cep);
 
   useEffect(() => {
-    if (!contactEmail) return;
-    console.log("entrou para setar contato existente");
-
-    const contactList: Contact[] = JSON.parse(
-      localStorage.getItem("contacts") || "null"
-    );
-    const contactData = contactList.filter(
-      (contact) => contact.email === contactEmail
-    )[0];
-    console.log(contactData);
-    setName(contactData.name);
-    setEmail(contactData.email);
-    setBirthday(contactData.birthday);
-    setCep(contactData.cep);
-    setStreet(contactData.street);
-    setNumber(contactData.number);
-    setComplement(contactData.complement);
-    setCity(contactData.city);
-    setState(contactData.state);
-  });
-
-  function resetAddressInputs() {
-    setStreet("");
-    setNumber("");
-    setComplement("");
-    setCity("");
-    setState("");
-  }
-
-  useEffect(() => {
     if (cep.includes("_") || cep === "") {
       console.log("entrou no if de resetar endereo caso cep esteja vazio");
       resetAddressInputs();
@@ -81,6 +51,36 @@ export default function Form(): JSX.Element {
       });
   }, [cep]);
 
+  useEffect(() => {
+    if (!contactEmail) return;
+    console.log("entrou para setar contato existente");
+
+    const contactList: Contact[] = JSON.parse(
+      localStorage.getItem("contacts") || "null"
+    );
+    const contactData = contactList.filter(
+      (contact) => contact.email === contactEmail
+    )[0];
+    console.log(contactData);
+    setName(contactData.name);
+    setEmail(contactData.email);
+    setBirthday(contactData.birthday);
+    setCep(contactData.cep);
+    setStreet(contactData.street);
+    setNumber(contactData.number);
+    setComplement(contactData.complement);
+    setCity(contactData.city);
+    setState(contactData.state);
+  }, []);
+
+  function resetAddressInputs() {
+    setStreet("");
+    setNumber("");
+    setComplement("");
+    setCity("");
+    setState("");
+  }
+
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const newContact: Contact = {
@@ -97,7 +97,7 @@ export default function Form(): JSX.Element {
 
     if (localStorage.getItem("contacts") === null) {
       localStorage.setItem("contacts", JSON.stringify([newContact]));
-    } else {
+    } else if (!contactEmail) {
       const previousData: Contact[] = JSON.parse(
         localStorage.getItem("contacts") || "null"
       );
@@ -105,6 +105,18 @@ export default function Form(): JSX.Element {
         "contacts",
         JSON.stringify([...previousData, newContact])
       );
+    } else {
+      const contactList: Contact[] = JSON.parse(
+        localStorage.getItem("contacts") || "null"
+      );
+
+      const contactData = contactList.filter(
+        (contact) => contact.email === contactEmail
+      )[0];
+
+      const contactIndex = contactList.indexOf(contactData);
+
+      console.log(contactIndex);
     }
   }
 
