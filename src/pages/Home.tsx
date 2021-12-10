@@ -19,7 +19,7 @@ export default function Home(): JSX.Element {
       if (nameA > nameB) return 1;
       return 0;
     });
-    
+
     setContacts(contactsList);
   }, []);
 

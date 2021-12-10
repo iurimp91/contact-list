@@ -25,7 +25,7 @@ function App(): JSX.Element {
   return (
     <>
       <Header />
-      <Container sx={{ backgroundColor: "#FAFAFA", pt: "68px", pb: "20px" }}>
+      <Container sx={{ backgroundColor: "#FAFAFA", pt: "68px", pb: "20px", minHeight: "100vh" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact/:contactEmail" element={<ContactPage />} />
