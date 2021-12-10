@@ -3,7 +3,8 @@ import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import InputMask from "react-input-mask";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Contact from "../interfaces/Contact";
 
 export default function Form(): JSX.Element {
@@ -17,27 +18,65 @@ export default function Form(): JSX.Element {
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
 
+  function resetAddressInputs() {
+    setStreet("");
+    setNumber("");
+    setComplement("");
+    setCity("");
+    setState("");
+  }
+
+  useEffect(() => {
+    if (cep.includes("_") || cep === "") {
+      resetAddressInputs();
+      return;
+    }
+
+    const cepWithoutMask = cep.replace("-", "");
+    axios
+      .get(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)
+      .then((response) => {
+        if (response.data.erro) {
+          alert("O CEP informado não existe, por favor, tente novamente.");
+          resetAddressInputs();
+        } else {
+          setStreet(response.data.logradouro);
+          setComplement(response.data.complemento);
+          setCity(response.data.localidade);
+          setState(response.data.uf);
+        }
+      })
+      .catch(() => {
+        alert("Algo deu errado com sua requisição, por favor, tente novamente.");
+        resetAddressInputs();
+      });
+  }, [cep]);
+
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const newContact = {
       name,
       email,
       birthday,
-      cep: cep.replace("-", ""),
+      cep,
       street,
       number,
       complement,
       city,
-      state
+      state,
     };
 
-    if(localStorage.getItem("contacts") === null) {
+    if (localStorage.getItem("contacts") === null) {
       localStorage.setItem("contacts", JSON.stringify([newContact]));
     } else {
-      const previousData: Contact[] = JSON.parse(localStorage.getItem("contacts") || "null");
-      localStorage.setItem("contacts", JSON.stringify([...previousData, newContact]));
+      const previousData: Contact[] = JSON.parse(
+        localStorage.getItem("contacts") || "null"
+      );
+      localStorage.setItem(
+        "contacts",
+        JSON.stringify([...previousData, newContact])
+      );
     }
-    
   }
 
   return (
@@ -63,18 +102,22 @@ export default function Form(): JSX.Element {
             onChange={(newValue) => setBirthday(newValue)}
             disableFuture
             clearable
-            renderInput={(props) => (
-              <TextField {...props} required />
-            )}
+            renderInput={(props) => <TextField {...props} required />}
           />
-          <InputMask mask="99999-999" value={cep} onChange={(e) => setCep(e.target.value)}>
-            {(props: JSX.IntrinsicAttributes & TextFieldProps) => <TextField label="CEP" required {...props} />}
+          <InputMask
+            mask="99999-999"
+            value={cep}
+            onChange={(e) => setCep(e.target.value)}
+          >
+            {(props: JSX.IntrinsicAttributes & TextFieldProps) => (
+              <TextField label="CEP" required {...props} />
+            )}
           </InputMask>
           <TextField
             required
+            disabled
             label="Street"
             value={street}
-            onChange={(e) => setStreet(e.target.value)}
           />
           <TextField
             required
@@ -89,15 +132,15 @@ export default function Form(): JSX.Element {
           />
           <TextField
             required
+            disabled
             label="City"
             value={city}
-            onChange={(e) => setCity(e.target.value)}
           />
           <TextField
             required
+            disabled
             label="State"
             value={state}
-            onChange={(e) => setState(e.target.value)}
           />
           <Button
             variant="contained"

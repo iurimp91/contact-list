@@ -10,7 +10,7 @@ import {
 import Contact from "../interfaces/Contact";
 
 export default function ContactPage(): JSX.Element {
-  const [contact, setContact] = useState<Contact>();
+  const [contact, setContact] = useState<Contact | undefined>(undefined);
   const { email } = useParams();
 
   useEffect(() => {
