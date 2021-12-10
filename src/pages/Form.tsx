@@ -54,7 +54,7 @@ export default function Form(): JSX.Element {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const newContact = {
+    const newContact: Contact = {
       name,
       email,
       birthday,

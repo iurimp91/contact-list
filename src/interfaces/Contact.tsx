@@ -1,7 +1,7 @@
 export default interface Contact {
   name: string;
   email: string;
-  birthday: string;
+  birthday: Date | null;
   cep: string;
   street: string;
   number: string;
