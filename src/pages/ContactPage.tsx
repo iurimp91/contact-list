@@ -25,6 +25,23 @@ export default function ContactPage(): JSX.Element {
     setContact(contactData);
   }, []);
 
+  function handleDelete() {
+    const contactList: Contact[] = JSON.parse(
+      localStorage.getItem("contacts") || "null"
+    );
+
+    const arrayWithoutContact = contactList.filter(
+      (contact) => contact.email !== contactEmail
+    );
+
+    localStorage.setItem(
+      "contacts",
+      JSON.stringify(arrayWithoutContact)
+    );
+
+    navigate("/");
+  }
+
   return (
     <Box height="calc(100vh - 88px)">
       <Box display="flex" alignItems="center" mb="15px">
@@ -70,6 +87,14 @@ export default function ContactPage(): JSX.Element {
         onClick={() => navigate(`/form/${contact?.email}`)}
       >
         EDIT
+      </Button>
+      <Button
+        fullWidth
+        variant="outlined"
+        startIcon={<ModeEditOutline />}
+        onClick={handleDelete}
+      >
+        DELETE
       </Button>
     </Box>
   );
