@@ -6,9 +6,9 @@ import Form from "./pages/Form";
 
 function App(): JSX.Element {
   return (
-    <Box sx={{ backgroundColor: "#FAFAFA", height: "100vh" }}>
+    <>
       <AppBar
-        position="static"
+        position="fixed"
         sx={{
           backgroundColor: "#FFFFFF",
         }}
@@ -19,14 +19,14 @@ function App(): JSX.Element {
           CONTACT LIST
         </Typography>
       </AppBar>
-      <Container sx={{ mt: "40px" }}>
+      <Container sx={{ backgroundColor: "#FAFAFA", pt: "68px", pb: "20px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact/:email" element={<ContactPage />} />
           <Route path="/form" element={<Form />} />
         </Routes>
       </Container>
-    </Box>
+    </>
   );
 }
 

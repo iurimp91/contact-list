@@ -20,7 +20,7 @@ export default function ContactPage(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <Box height="calc(100vh - 88px)">
       <Box display="flex" alignItems="center" mb="15px">
         <PersonOutlineOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
         <Typography sx={{ fontSize: "25px", color: "#000000", ml: "10px" }}>
@@ -57,6 +57,6 @@ export default function ContactPage(): JSX.Element {
       <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
         Complement: {contact?.complement}
       </Typography>
-    </>
+    </Box>
   );
 }

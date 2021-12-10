@@ -24,7 +24,7 @@ export default function Home(): JSX.Element {
               borderRadius: "10px",
               display: "flex",
               alignItems: "center",
-              mb: "20px",
+              mt: "20px",
               cursor: "pointer",
               ":hover": {
                 backgroundColor: "#DBDBDB",
