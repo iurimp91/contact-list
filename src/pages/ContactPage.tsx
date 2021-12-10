@@ -12,7 +12,7 @@ import Contact from "../interfaces/Contact";
 
 export default function ContactPage(): JSX.Element {
   const [contact, setContact] = useState<Contact | undefined>(undefined);
-  const { email } = useParams();
+  const { contactEmail } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function ContactPage(): JSX.Element {
       localStorage.getItem("contacts") || "null"
     );
     const contactData = contactList.filter(
-      (contact) => contact.email === email
+      (contact) => contact.email === contactEmail
     )[0];
     setContact(contactData);
   }, []);

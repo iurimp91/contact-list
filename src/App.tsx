@@ -28,9 +28,9 @@ function App(): JSX.Element {
       <Container sx={{ backgroundColor: "#FAFAFA", pt: "68px", pb: "20px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact/:email" element={<ContactPage />} />
+          <Route path="/contact/:contactEmail" element={<ContactPage />} />
           <Route path="/form" element={<Form />} />
-          <Route path="/form/:email" element={<Form />} />
+          <Route path="/form/:contactEmail" element={<Form />} />
         </Routes>
       </Container>
     </>
