@@ -30,6 +30,7 @@ function App(): JSX.Element {
           <Route path="/" element={<Home />} />
           <Route path="/contact/:email" element={<ContactPage />} />
           <Route path="/form" element={<Form />} />
+          <Route path="/form/:email" element={<Form />} />
         </Routes>
       </Container>
     </>

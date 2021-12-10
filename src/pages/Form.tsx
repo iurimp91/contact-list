@@ -5,6 +5,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import InputMask from "react-input-mask";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Contact from "../interfaces/Contact";
 
 export default function Form(): JSX.Element {
@@ -17,6 +18,27 @@ export default function Form(): JSX.Element {
   const [complement, setComplement] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
+  const { emailParam } = useParams();
+
+  useEffect(() => {
+    if (!emailParam) return;
+
+    const contactList: Contact[] = JSON.parse(
+      localStorage.getItem("contacts") || "null"
+    );
+    const contactData = contactList.filter(
+      (contact) => contact.email === email
+    )[0];
+    setName(contactData.name);
+    setEmail(contactData.email);
+    setBirthday(contactData.birthday);
+    setCep(contactData.cep);
+    setStreet(contactData.street);
+    setNumber(contactData.number);
+    setComplement(contactData.complement);
+    setCity(contactData.city);
+    setState(contactData.state);
+  }, []);
 
   function resetAddressInputs() {
     setStreet("");

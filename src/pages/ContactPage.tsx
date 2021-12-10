@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import { Box, Typography, Button } from "@mui/material";
 import {
   PersonOutlineOutlined,
   EmailOutlined,
   CakeOutlined,
   HomeOutlined,
+  ModeEditOutline,
 } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 
 export default function ContactPage(): JSX.Element {
   const [contact, setContact] = useState<Contact | undefined>(undefined);
   const { email } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const contactList: Contact[] = JSON.parse(localStorage.getItem("contacts") || "null");
-    const contactData = contactList.filter((contact) => contact.email === email)[0];
+    const contactList: Contact[] = JSON.parse(
+      localStorage.getItem("contacts") || "null"
+    );
+    const contactData = contactList.filter(
+      (contact) => contact.email === email
+    )[0];
     setContact(contactData);
   }, []);
 
@@ -57,6 +63,14 @@ export default function ContactPage(): JSX.Element {
       <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px" }}>
         Complement: {contact?.complement}
       </Typography>
+      <Button
+        fullWidth
+        variant="outlined"
+        startIcon={<ModeEditOutline />}
+        onClick={() => navigate(`/form/${contact?.email}`)}
+      >
+        EDIT
+      </Button>
     </Box>
   );
 }
