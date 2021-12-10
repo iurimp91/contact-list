@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Typography, Box } from "@mui/material";
-import { ContactPageOutlined } from "@mui/icons-material";
+import { Typography, Box, Button } from "@mui/material";
+import { ContactPageOutlined, AddBoxOutlined } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +14,14 @@ export default function Home(): JSX.Element {
 
   return (
     <>
+      <Button
+        fullWidth
+        variant="outlined"
+        startIcon={<AddBoxOutlined />}
+        onClick={() => navigate("/form")}
+      >
+        ADD NEW
+      </Button>
       {contactList
         ? contactList.map(({ name, email }) => (
           <Box
@@ -32,7 +40,9 @@ export default function Home(): JSX.Element {
             }}
             onClick={() => navigate(`/contact/${email}`)}
           >
-            <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
+            <ContactPageOutlined
+              sx={{ fontSize: "40px", color: "#6AEFAB" }}
+            />
             <Typography sx={{ fontSize: "23px", ml: "15px" }}>
               {name}
             </Typography>
