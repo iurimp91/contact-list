@@ -24,6 +24,7 @@ const initialValues: Contact = {
 export default function Form(): JSX.Element {
   const [values, setValues] = useState<Contact>(initialValues);
   const [errors, setErrors] = useState<Errors>({});
+  const [buttonIsDisabled, setButtonIsDisabled] = useState<boolean>(true);
   const { contactEmail } = useParams();
   const navigate = useNavigate();
 
@@ -86,8 +87,6 @@ export default function Form(): JSX.Element {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
-    // if (!validate()) return;
-
     const newContact: Contact = {
       ...values,
     };
@@ -141,7 +140,12 @@ export default function Form(): JSX.Element {
 
     setErrors({ ...temp });
 
-    return Object.values(temp).every((x) => x === "");
+    const isValid = Object.values(temp).every((x) => x === "");
+    if(isValid) {
+      setButtonIsDisabled(false);
+    } else {
+      setButtonIsDisabled(true);
+    }
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -241,6 +245,7 @@ export default function Form(): JSX.Element {
           <TextField disabled label="City" name="city" value={values.city} />
           <TextField disabled label="State" name="state" value={values.state} />
           <Button
+            disabled={buttonIsDisabled}
             variant="contained"
             type="submit"
             startIcon={<SaveOutlined />}
