@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Stack, TextField, Button, TextFieldProps } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
@@ -22,39 +21,11 @@ const initialValues: Contact = {
   state: "",
 };
 
-const initialErrorsValues: Errors = {
-  name: "",
-  email: "",
-  birthday: "",
-  cep: "",
-  number: "",
-};
-
 export default function Form(): JSX.Element {
   const [values, setValues] = useState<Contact>(initialValues);
-  const [errors, setErrors] = useState<Errors>(initialErrorsValues);
+  const [errors, setErrors] = useState<Errors>({});
   const { contactEmail } = useParams();
   const navigate = useNavigate();
-
-  function validate() {
-    console.log("entrou validate");
-    const temp: Errors = {
-      name: "",
-      email: "",
-      birthday: "",
-      cep: "",
-      number: "",
-    };
-    temp.name = values.name ? "" : "This field is required";
-    temp.email = values.email ? "" : "This field is required";
-    temp.birthday = values.birthday ? "" : "This field is required";
-    temp.cep = values.cep ? "" : "This field is required";
-    temp.number = values.number ? "" : "This field is required";
-
-    setErrors({ ...temp });
-
-    return Object.values(temp).every((x) => x === "");
-  }
 
   useEffect(() => {
     if (values.cep.includes("_") || values.cep === "") {
@@ -115,7 +86,7 @@ export default function Form(): JSX.Element {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
-    if (!validate()) return;
+    // if (!validate()) return;
 
     const newContact: Contact = {
       ...values,
@@ -149,6 +120,30 @@ export default function Form(): JSX.Element {
     navigate("/");
   }
 
+  function validate(inputField: Errors) {
+    const temp: Errors = { ...errors };
+
+    if("name" in inputField) {
+      temp.name = inputField.name ? "" : "This field is required";
+    }
+    if("email" in inputField) {
+      temp.email = inputField.email ? "" : "This field is required";
+    }
+    if("birthday" in inputField) {
+      temp.birthday = inputField.birthday ? "" : "This field is required";
+    }
+    if("cep" in inputField) {
+      temp.cep = inputField.cep ? "" : "This field is required";
+    }
+    if("number" in inputField) {
+      temp.number = inputField.number ? "" : "This field is required";
+    }
+
+    setErrors({ ...temp });
+
+    return Object.values(temp).every((x) => x === "");
+  }
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
 
@@ -156,9 +151,15 @@ export default function Form(): JSX.Element {
       ...values,
       [name]: value,
     });
+
+    validate({ [name]: value });
   }
 
-  console.log(values.birthday);
+  function handleBlur(event: React.FocusEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+
+    validate({ [name]: value });
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -169,7 +170,8 @@ export default function Form(): JSX.Element {
             name="name"
             value={values.name}
             onChange={handleChange}
-            error={errors.name !== ""}
+            onBlur={handleBlur}
+            error={!!errors.name}
             helperText={errors.name}
           />
           <TextField
@@ -178,7 +180,8 @@ export default function Form(): JSX.Element {
             type="email"
             value={values.email}
             onChange={handleChange}
-            error={errors.email !== ""}
+            onBlur={handleBlur}
+            error={!!errors.email}
             helperText={errors.email}
           />
           <DatePicker
@@ -190,6 +193,8 @@ export default function Form(): JSX.Element {
             openTo="year"
             renderInput={(props) => (
               <TextField
+                name="birthday"
+                onBlur={handleBlur}
                 helperText={errors.birthday}
                 {...props}
               />
@@ -200,10 +205,11 @@ export default function Form(): JSX.Element {
             name="cep"
             value={values.cep}
             onChange={handleChange}
+            onBlur={handleBlur}
           >
             {(props: JSX.IntrinsicAttributes & TextFieldProps) => (
               <TextField
-                error={errors.cep !== ""}
+                error={!!errors.cep}
                 helperText={errors.cep}
                 label="CEP"
                 {...props}
@@ -222,7 +228,8 @@ export default function Form(): JSX.Element {
             name="number"
             value={values.number}
             onChange={handleChange}
-            error={errors.number !== ""}
+            onBlur={handleBlur}
+            error={!!errors.number}
             helperText={errors.number}
           />
           <TextField
