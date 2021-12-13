@@ -126,16 +126,29 @@ export default function Form(): JSX.Element {
       temp.name = inputField.name ? "" : "This field is required";
     }
     if("email" in inputField) {
-      temp.email = inputField.email ? "" : "This field is required";
+      if(inputField.email === "") {
+        temp.email = "This field is required";
+      } else {
+        temp.email = inputField.email?.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) ? "" : "Please, enter a valid email";
+      }
     }
     if("birthday" in inputField) {
       temp.birthday = inputField.birthday ? "" : "This field is required";
     }
     if("cep" in inputField) {
-      temp.cep = inputField.cep ? "" : "This field is required";
+      if(inputField.cep === "") {
+        temp.cep = "This field is required";
+      } else {
+        temp.cep = inputField.cep?.match(/^\d{5}-\d{3}$/) ? "" : "Please, enter a valid cep";
+      }
     }
     if("number" in inputField) {
-      temp.number = inputField.number ? "" : "This field is required";
+      if(inputField.number === "") {
+        temp.number = "This field is required";
+      } else {
+        const tempNumber = parseFloat(inputField.number || "");
+        temp.number = tempNumber > 0 && Number.isInteger(tempNumber) ? "" : "Number should be an integer higher than 0";
+      }
     }
 
     setErrors({ ...temp });
