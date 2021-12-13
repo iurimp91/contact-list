@@ -49,6 +49,7 @@ export default function Form(): JSX.Element {
             city: response.data.localidade,
             state: response.data.uf,
           });
+          setErrors({ cep: undefined });
         }
       })
       .catch(() => {
@@ -139,7 +140,7 @@ export default function Form(): JSX.Element {
       if(inputField.cep === "") {
         temp.cep = "This field is required";
       } else {
-        temp.cep = inputField.cep?.match(/^\d{5}-\d{3}$/) ? "" : "Please, enter a valid cep";
+        temp.cep = values.street && inputField.cep?.match(/^\d{5}-\d{3}$/) ? "" : "Please, enter a valid cep";
       }
     }
     if("number" in inputField) {
