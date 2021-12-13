@@ -159,6 +159,7 @@ export default function Form(): JSX.Element {
           />
           <TextField
             required
+            type="number"
             label="Number"
             value={number}
             onChange={(e) => setNumber(e.target.value)}
