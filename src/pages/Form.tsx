@@ -8,26 +8,30 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Contact from "../interfaces/Contact";
 
+const initialValues: Contact = {
+  name: "",
+  email: "",
+  birthday: null,
+  cep: "",
+  street: "",
+  number: "",
+  complement: "",
+  city: "",
+  state: "",
+};
+
 export default function Form(): JSX.Element {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [birthday, setBirthday] = useState<Date | null>(null);
-  const [cep, setCep] = useState<string>("");
-  const [street, setStreet] = useState<string>("");
-  const [number, setNumber] = useState<string>("");
-  const [complement, setComplement] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [state, setState] = useState<string>("");
+  const [values, setValues] = useState<Contact>(initialValues);
   const { contactEmail } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (cep.includes("_") || cep === "") {
+    if (values.cep.includes("_") || values.cep === "") {
       resetAddressInputs();
       return;
     }
 
-    const cepWithoutMask = cep.replace("-", "");
+    const cepWithoutMask = values.cep.replace("-", "");
     axios
       .get(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)
       .then((response) => {
@@ -35,17 +39,20 @@ export default function Form(): JSX.Element {
           alert("O CEP informado não existe, por favor, tente novamente.");
           resetAddressInputs();
         } else {
-          setStreet(response.data.logradouro);
-          setComplement(response.data.complemento);
-          setCity(response.data.localidade);
-          setState(response.data.uf);
+          setValues({
+            ...values,
+            street: response.data.logradouro,
+            complement: response.data.complemento,
+            city: response.data.localidade,
+            state: response.data.uf,
+          });
         }
       })
       .catch(() => {
         alert("Algo deu errado com sua requisição, por favor, tente novamente.");
         resetAddressInputs();
       });
-  }, [cep]);
+  }, [values.cep]);
 
   useEffect(() => {
     if (!contactEmail) return;
@@ -56,37 +63,26 @@ export default function Form(): JSX.Element {
     const contactData = contactList.filter(
       (contact) => contact.email === contactEmail
     )[0];
-    setName(contactData.name);
-    setEmail(contactData.email);
-    setBirthday(contactData.birthday);
-    setCep(contactData.cep);
-    setStreet(contactData.street);
-    setNumber(contactData.number);
-    setComplement(contactData.complement);
-    setCity(contactData.city);
-    setState(contactData.state);
+    setValues({
+      ...contactData
+    });
   }, []);
 
   function resetAddressInputs() {
-    setStreet("");
-    setNumber("");
-    setComplement("");
-    setCity("");
-    setState("");
+    setValues({
+      ...values,
+      street: "",
+      number: "",
+      complement: "",
+      city: "",
+      state: "",
+    });
   }
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const newContact: Contact = {
-      name,
-      email,
-      birthday,
-      cep,
-      street,
-      number,
-      complement,
-      city,
-      state,
+      ...values
     };
 
     if (localStorage.getItem("contacts") === null) {
@@ -117,6 +113,15 @@ export default function Form(): JSX.Element {
     navigate("/");
   }
 
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+
+    setValues({
+      ...values,
+      [name]: value
+    });
+  }
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <form onSubmit={handleSubmit}>
@@ -124,28 +129,32 @@ export default function Form(): JSX.Element {
           <TextField
             required
             label="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            value={values.name}
+            onChange={handleChange}
           />
           <TextField
             required
             label="Email"
+            name="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={values.email}
+            onChange={handleChange}
           />
           <DatePicker
             label="Birthday"
-            value={birthday}
-            onChange={(newValue) => setBirthday(newValue)}
+            value={values.birthday}
+            onChange={(date) => setValues({ ... values, birthday: date })}
             disableFuture
             clearable
+            openTo="year"
             renderInput={(props) => <TextField {...props} required />}
           />
           <InputMask
             mask="99999-999"
-            value={cep}
-            onChange={(e) => setCep(e.target.value)}
+            name="cep"
+            value={values.cep}
+            onChange={handleChange}
           >
             {(props: JSX.IntrinsicAttributes & TextFieldProps) => (
               <TextField label="CEP" required {...props} />
@@ -155,31 +164,36 @@ export default function Form(): JSX.Element {
             required
             disabled
             label="Street"
-            value={street}
+            name="street"
+            value={values.street}
           />
           <TextField
             required
             type="number"
             label="Number"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
+            name="number"
+            value={values.number}
+            onChange={handleChange}
           />
           <TextField
             label="Complement"
-            value={complement}
-            onChange={(e) => setComplement(e.target.value)}
+            name="complement"
+            value={values.complement}
+            onChange={handleChange}
           />
           <TextField
             required
             disabled
             label="City"
-            value={city}
+            name="city"
+            value={values.city}
           />
           <TextField
             required
             disabled
             label="State"
-            value={state}
+            name="state"
+            value={values.state}
           />
           <Button
             variant="contained"
