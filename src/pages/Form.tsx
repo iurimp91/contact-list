@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Stack, TextField, Button, TextFieldProps } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
@@ -50,7 +51,7 @@ export default function Form(): JSX.Element {
             city: response.data.localidade,
             state: response.data.uf,
           });
-          setErrors({ cep: "" });
+          setErrors({ ...errors, cep: "" });
         }
       })
       .catch(() => {
@@ -69,6 +70,7 @@ export default function Form(): JSX.Element {
     const contactData = getContactByEmail(contactList, contactEmail);
 
     setValues({ ...contactData });
+    setErrors({ name: "", email: "", birthday: "", cep: "", number: "" });
 
     setButtonIsDisabled(false);
   }, []);
@@ -77,8 +79,6 @@ export default function Form(): JSX.Element {
     setValues({
       ...values,
       street: "",
-      number: "",
-      complement: "",
       city: "",
       state: "",
     });
@@ -109,7 +109,9 @@ export default function Form(): JSX.Element {
     navigate("/");
   }
 
-  function validate(inputField: Errors) {
+  console.log(errors);
+
+  function validateOnChange(inputField: Errors) {
     const temp: Errors = { ...errors };
 
     if("name" in inputField) {
@@ -143,7 +145,7 @@ export default function Form(): JSX.Element {
 
     setErrors({ ...temp });
 
-    const isValid = Object.values(temp).every((x) => x === "");
+    const isValid = Object.values(temp).every((x) => x === "") && Object.values(temp).length === 5;
     if(isValid) {
       setButtonIsDisabled(false);
     } else {
@@ -159,13 +161,13 @@ export default function Form(): JSX.Element {
       [name]: value,
     });
 
-    validate({ [name]: value });
+    validateOnChange({ [name]: value });
   }
 
   function handleBlur(event: React.FocusEvent<HTMLInputElement>) {
     const { name, value } = event.target;
 
-    validate({ [name]: value });
+    validateOnChange({ [name]: value });
   }
 
   return (
