@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Stack, TextField, Button, TextFieldProps } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
@@ -49,7 +50,7 @@ export default function Form(): JSX.Element {
             city: response.data.localidade,
             state: response.data.uf,
           });
-          setErrors({ cep: undefined });
+          setErrors({ cep: "", number: "This field is required" }); // PAREI AQUI. TENHO QUE FAZER O NÚMERO FICAR COM ERRO OU NÃO DE ACCORDO COM O CEP. MUDAR O USEEFFECT DO CEP PARA UMA FUNÇÃO DE HANDLECEPCHANGES
         }
       })
       .catch(() => {
@@ -72,6 +73,7 @@ export default function Form(): JSX.Element {
     setValues({
       ...contactData,
     });
+    setButtonIsDisabled(false);
   }, []);
 
   function resetAddressInputs() {
@@ -155,12 +157,15 @@ export default function Form(): JSX.Element {
     setErrors({ ...temp });
 
     const isValid = Object.values(temp).every((x) => x === "");
+    console.log(isValid);
     if(isValid) {
       setButtonIsDisabled(false);
     } else {
       setButtonIsDisabled(true);
     }
   }
+
+  console.log(errors);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
