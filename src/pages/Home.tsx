@@ -3,24 +3,18 @@ import { Typography, Box, Button } from "@mui/material";
 import { ContactPageOutlined, AddBoxOutlined } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
+import { getContactList, sortContactList } from "../utils/localStorageHandlers";
 
 export default function Home(): JSX.Element {
   const [contacts, setContacts] = useState<Contact[] | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const contactsList: Contact[] = JSON.parse(localStorage.getItem("contacts") || "null");
+    const contactList: Contact[] = getContactList();
 
-    contactsList.sort((a: Contact, b: Contact) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
+    sortContactList(contactList);
 
-      if (nameA < nameB) return -1;
-      if (nameA > nameB) return 1;
-      return 0;
-    });
-
-    setContacts(contactsList);
+    setContacts(contactList);
   }, []);
 
   return (
