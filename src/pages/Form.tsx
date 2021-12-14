@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Contact from "../interfaces/Contact";
 import Errors from "../interfaces/Errors";
+import { getContactByEmail, getContactList, setContactList, updateContactList } from "../utils/localStorageHandlers";
 
 const initialValues: Contact = {
   name: "",
@@ -63,15 +64,10 @@ export default function Form(): JSX.Element {
   useEffect(() => {
     if (!contactEmail) return;
 
-    const contactList: Contact[] = JSON.parse(
-      localStorage.getItem("contacts") || "null"
-    );
-    const contactData = contactList.filter(
-      (contact) => contact.email === contactEmail
-    )[0];
-    setValues({
-      ...contactData,
-    });
+    const contactList: Contact[] = getContactList();
+
+    const contactData = getContactByEmail(contactList, contactEmail);
+    setValues({ ...contactData });
     setButtonIsDisabled(false);
   }, []);
 
@@ -94,28 +90,18 @@ export default function Form(): JSX.Element {
     };
 
     if (localStorage.getItem("contacts") === null) {
-      localStorage.setItem("contacts", JSON.stringify([newContact]));
+      setContactList(newContact);
     } else if (!contactEmail) {
-      const previousData: Contact[] = JSON.parse(
-        localStorage.getItem("contacts") || "null"
-      );
-      localStorage.setItem(
-        "contacts",
-        JSON.stringify([...previousData, newContact])
-      );
+      const currentList: Contact[] = getContactList();
+      updateContactList(currentList, newContact);
     } else {
-      const contactList: Contact[] = JSON.parse(
-        localStorage.getItem("contacts") || "null"
-      );
+      const contactList: Contact[] = getContactList();
 
       const arrayWithoutContact = contactList.filter(
         (contact) => contact.email !== contactEmail
       );
 
-      localStorage.setItem(
-        "contacts",
-        JSON.stringify([...arrayWithoutContact, newContact])
-      );
+      updateContactList(arrayWithoutContact, newContact);
     }
 
     navigate("/");

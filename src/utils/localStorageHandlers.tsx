@@ -15,4 +15,25 @@ function sortContactList(contactList: Contact[]): void {
   });
 }
 
-export { getContactList, sortContactList };
+function setContactList(contact: Contact) {
+  localStorage.setItem("contacts", JSON.stringify([contact]));
+}
+
+function updateContactList(currentList: Contact[], newContact: Contact) {
+  localStorage.setItem(
+    "contacts",
+    JSON.stringify([...currentList, newContact])
+  );
+}
+
+function getContactByEmail(contactList: Contact[], email: string): Contact {
+  return contactList.filter((contact) => contact.email === email)[0];
+}
+
+export {
+  getContactList,
+  sortContactList,
+  setContactList,
+  updateContactList,
+  getContactByEmail,
+};
