@@ -12,6 +12,8 @@ export default function Home(): JSX.Element {
   useEffect(() => {
     const contactList: Contact[] = getContactList();
 
+    if(!contactList) return;
+    
     sortContactList(contactList);
 
     setContacts(contactList);
