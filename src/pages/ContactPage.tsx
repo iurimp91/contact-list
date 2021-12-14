@@ -9,35 +9,34 @@ import {
   ModeEditOutline,
 } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
+import { getContactList, getContactByEmail, setContactList } from "../utils/localStorageHandlers";
 
 export default function ContactPage(): JSX.Element {
-  const [contact, setContact] = useState<Contact | undefined>(undefined);
+  const [contact, setContact] = useState<Contact>();
   const { contactEmail } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const contactList: Contact[] = JSON.parse(
-      localStorage.getItem("contacts") || "null"
-    );
-    const contactData = contactList.filter(
-      (contact) => contact.email === contactEmail
-    )[0];
+    if(!contactEmail) {
+      alert("Não foi possível encontrar o contato, por favor, tente novamente.");
+      return;
+    }
+
+    const contactList: Contact[] = getContactList();
+
+    const contactData = getContactByEmail(contactList, contactEmail);
+
     setContact(contactData);
   }, []);
 
   function handleDelete() {
-    const contactList: Contact[] = JSON.parse(
-      localStorage.getItem("contacts") || "null"
-    );
+    const contactList: Contact[] = getContactList();
 
     const arrayWithoutContact = contactList.filter(
       (contact) => contact.email !== contactEmail
     );
 
-    localStorage.setItem(
-      "contacts",
-      JSON.stringify(arrayWithoutContact)
-    );
+    setContactList(arrayWithoutContact);
 
     navigate("/");
   }

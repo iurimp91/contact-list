@@ -67,7 +67,9 @@ export default function Form(): JSX.Element {
     const contactList: Contact[] = getContactList();
 
     const contactData = getContactByEmail(contactList, contactEmail);
+
     setValues({ ...contactData });
+
     setButtonIsDisabled(false);
   }, []);
 
@@ -90,7 +92,7 @@ export default function Form(): JSX.Element {
     };
 
     if (localStorage.getItem("contacts") === null) {
-      setContactList(newContact);
+      setContactList([newContact]);
     } else if (!contactEmail) {
       const currentList: Contact[] = getContactList();
       updateContactList(currentList, newContact);
