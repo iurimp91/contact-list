@@ -18,7 +18,7 @@ export default function ContactPage(): JSX.Element {
 
   useEffect(() => {
     if(!contactEmail) {
-      alert("Não foi possível encontrar o contato, por favor, tente novamente.");
+      alert("Couldn't find the contact, please, try again.");
       return;
     }
 

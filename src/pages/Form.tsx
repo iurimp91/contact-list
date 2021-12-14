@@ -41,7 +41,7 @@ export default function Form(): JSX.Element {
       .get(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)
       .then((response) => {
         if (response.data.erro) {
-          alert("O CEP informado não existe, por favor, tente novamente.");
+          alert("This CEP doesn't exist, please, try again.");
           resetAddressInputs();
         } else {
           setValues({
@@ -56,7 +56,7 @@ export default function Form(): JSX.Element {
       })
       .catch(() => {
         alert(
-          "Algo deu errado com sua requisição, por favor, tente novamente."
+          "Something went wrong, please, try again."
         );
         resetAddressInputs();
       });
