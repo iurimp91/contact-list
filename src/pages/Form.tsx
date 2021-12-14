@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Stack, TextField, Button, TextFieldProps } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
@@ -31,7 +30,7 @@ export default function Form(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (values.cep.includes("_") || values.cep === "") {
+    if (!values.cep.match(/^\d{5}-\d{3}$/)) {
       resetAddressInputs();
       return;
     }
@@ -51,7 +50,7 @@ export default function Form(): JSX.Element {
             city: response.data.localidade,
             state: response.data.uf,
           });
-          setErrors({ cep: undefined });
+          setErrors({ cep: "" });
         }
       })
       .catch(() => {
@@ -111,7 +110,6 @@ export default function Form(): JSX.Element {
   }
 
   function validate(inputField: Errors) {
-    console.log("entrou validade");
     const temp: Errors = { ...errors };
 
     if("name" in inputField) {
