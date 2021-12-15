@@ -78,7 +78,7 @@ export default function ContactPage(): JSX.Element {
         {contact?.city}/{contact?.state}
       </Typography>
       <Typography sx={{ fontSize: "20px", color: "#000000", mt: "15px", wordBreak: "break-all" }}>
-        Complement: {contact?.complement}
+        {contact?.complement && `Complement: ${contact?.complement}`}
       </Typography>
       <Button
         fullWidth
