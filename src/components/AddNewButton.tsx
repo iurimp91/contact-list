@@ -1,18 +1,13 @@
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import { AddBoxOutlined } from "@mui/icons-material";
 
-interface AddNewButtonProps {
-  onClick: () => void;
-}
-
-export default function AddNewButton(props: AddNewButtonProps) {
+export default function AddNewButton(props: ButtonProps) {
   return (
     <Button
-      fullWidth
       color="secondary"
       variant="outlined"
       startIcon={<AddBoxOutlined />}
-      onClick={props.onClick}
+      {...props}
     >
       ADD NEW
     </Button>

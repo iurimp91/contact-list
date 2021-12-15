@@ -23,7 +23,7 @@ export default function Home(): JSX.Element {
   return (
     <>
       <Box display={{ xs: "block", sm: "none" }}>
-        <AddNewButton onClick={() => navigate("/form")} />
+        <AddNewButton fullWidth onClick={() => navigate("/form")} />
       </Box>
       {contacts
         ? contacts.map(({ name, email }) => (

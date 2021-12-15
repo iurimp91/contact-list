@@ -4,24 +4,23 @@ import { HomeOutlined } from "@mui/icons-material";
 import Home from "./pages/Home";
 import ContactPage from "./pages/ContactPage";
 import Form from "./pages/Form";
+import AddNewButton from "./components/AddNewButton";
 
 function Header(): JSX.Element {
   const navigate = useNavigate();
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        backgroundColor: "#FFFFFF",
-      }}
-    >
+    <AppBar position="fixed" sx={{ backgroundColor: "#FFFFFF" }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" px="10px">
         <Typography sx={{ color: "#000000", textAlign: "center", fontSize: "26px" }}>
           CONTACT LIST
         </Typography>
-        <IconButton onClick={() => navigate("/")}>
-          <HomeOutlined sx={{ color: "#ED75EF" }} />
-        </IconButton>
+        <Box>
+          <AddNewButton sx={{ mr: "10px", display: { xs: "none", sm: "inline-flex" } }} onClick={() => navigate("/form")} />
+          <IconButton onClick={() => navigate("/")}>
+            <HomeOutlined sx={{ color: "#ED75EF" }} />
+          </IconButton>
+        </Box>
       </Box>
     </AppBar>
   );
