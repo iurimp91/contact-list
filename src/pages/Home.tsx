@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Typography, Box, Button } from "@mui/material";
-import { ContactPageOutlined, AddBoxOutlined } from "@mui/icons-material";
+import { Typography, Box } from "@mui/material";
+import { ContactPageOutlined } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
 import { getContactList, sortContactList } from "../utils/localStorageHandlers";
+import AddNewButton from "../components/AddNewButton";
 
 export default function Home(): JSX.Element {
   const [contacts, setContacts] = useState<Contact[] | null>(null);
@@ -12,8 +13,8 @@ export default function Home(): JSX.Element {
   useEffect(() => {
     const contactList: Contact[] = getContactList();
 
-    if(!contactList) return;
-    
+    if (!contactList) return;
+
     sortContactList(contactList);
 
     setContacts(contactList);
@@ -21,14 +22,9 @@ export default function Home(): JSX.Element {
 
   return (
     <>
-      <Button
-        fullWidth
-        variant="outlined"
-        startIcon={<AddBoxOutlined />}
-        onClick={() => navigate("/form")}
-      >
-        ADD NEW
-      </Button>
+      <Box display={{ xs: "block", sm: "none" }}>
+        <AddNewButton onClick={() => navigate("/form")} />
+      </Box>
       {contacts
         ? contacts.map(({ name, email }) => (
           <Box
