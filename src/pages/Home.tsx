@@ -1,13 +1,26 @@
 import { useEffect, useState } from "react";
-import { Typography, Box, Grid, Stack } from "@mui/material";
-import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
-import { getContactList, sortContactList } from "../utils/localStorageHandlers";
+import { Typography, Box, Grid, Stack, TypographyProps } from "@mui/material";
+import Contact from "../interfaces/Contact";
 import AddNewButton from "../components/AddNewButton";
-import {
-  ContactCardMobile,
-  ContactCardDesktop,
-} from "../components/ContactCard";
+import { ContactCardMobile, ContactCardDesktop } from "../components/ContactCard";
+import { getContactList, sortContactList } from "../utils/localStorageHandlers";
+
+function DesktopCardText(props: TypographyProps) {
+  return (
+    <Typography
+      noWrap={true}
+      sx={{
+        width: "190px",
+        ":hover": {
+          whiteSpace: "normal",
+          wordBreak: "break-all",
+        },
+      }}
+      {...props}
+    />
+  );
+}
 
 export default function Home(): JSX.Element {
   const [contacts, setContacts] = useState<Contact[] | null>(null);
@@ -29,57 +42,21 @@ export default function Home(): JSX.Element {
         <AddNewButton fullWidth onClick={() => navigate("/form")} />
       </Box>
       {contacts ? (
-        <Grid
-          container
-          spacing={3}
-          direction={{ xs: "column", sm: "row" }}
-          justifyContent="center"
-        >
+        <Grid container spacing={3} direction={{ xs: "column", sm: "row" }} justifyContent="center">
           {contacts.map(({ name, email }) => (
             <Grid item key={email}>
-              <ContactCardMobile
-                display={{ xs: "flex", sm: "none" }}
-                onClick={() => navigate(`/contact/${email}`)}
-              >
-                <Typography
-                  sx={{
-                    fontSize: "23px",
-                    wordBreak: "break-all",
-                  }}
-                >
+              <ContactCardMobile display={{ xs: "flex", sm: "none" }} onClick={() => navigate(`/contact/${email}`)}>
+                <Typography sx={{ fontSize: "23px", wordBreak: "break-all" }}>
                   {name}
                 </Typography>
               </ContactCardMobile>
-              <ContactCardDesktop
-                display={{ xs: "none", sm: "flex" }}
-                onClick={() => navigate(`/contact/${email}`)}
-              >
-                <Typography
-                  noWrap={true}
-                  sx={{
-                    fontSize: "21px",
-                    width: "190px",
-                    ":hover": {
-                      whiteSpace: "normal",
-                      wordBreak: "break-all",
-                    }
-                  }}
-                >
+              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} onClick={() => navigate(`/contact/${email}`)}>
+                <DesktopCardText fontSize="21px">
                   {name}
-                </Typography>
-                <Typography
-                  noWrap={true}
-                  sx={{
-                    fontSize: "19px",
-                    width: "190px",
-                    ":hover": {
-                      whiteSpace: "normal",
-                      wordBreak: "break-all",
-                    }
-                  }}
-                >
+                </DesktopCardText>
+                <DesktopCardText fontSize="19px">
                   {email}
-                </Typography>
+                </DesktopCardText>
               </ContactCardDesktop>
             </Grid>
           ))}
