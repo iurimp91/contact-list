@@ -9,7 +9,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Contact from "../interfaces/Contact";
 import Errors from "../interfaces/Errors";
-import { getContactByEmail, getContactList, setContactList, updateContactList } from "../utils/localStorageHandlers";
+import {
+  getContactByEmail,
+  getContactList,
+  setContactList,
+  updateContactList,
+} from "../utils/localStorageHandlers";
 
 const initialValues: Contact = {
   name: "",
@@ -55,9 +60,7 @@ export default function Form(): JSX.Element {
         }
       })
       .catch(() => {
-        alert(
-          "Something went wrong, please, try again."
-        );
+        alert("Something went wrong, please, try again.");
         resetAddressInputs();
       });
   }, [values.cep]);
@@ -114,39 +117,51 @@ export default function Form(): JSX.Element {
   function validateOnChange(inputField: Errors) {
     const temp: Errors = { ...errors };
 
-    if("name" in inputField) {
+    if ("name" in inputField) {
       temp.name = inputField.name ? "" : "This field is required";
     }
-    if("email" in inputField) {
-      if(inputField.email === "") {
+    if ("email" in inputField) {
+      if (inputField.email === "") {
         temp.email = "This field is required";
       } else {
-        temp.email = inputField.email?.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) ? "" : "Please, enter a valid email";
+        temp.email = inputField.email?.match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+          ? ""
+          : "Please, enter a valid email";
       }
     }
-    if("birthday" in inputField) {
+    if ("birthday" in inputField) {
       temp.birthday = inputField.birthday ? "" : "This field is required";
     }
-    if("cep" in inputField) {
-      if(inputField.cep === "") {
+    if ("cep" in inputField) {
+      if (inputField.cep === "") {
         temp.cep = "This field is required";
       } else {
-        temp.cep = values.street && inputField.cep?.match(/^\d{5}-\d{3}$/) ? "" : "Please, enter a valid cep";
+        temp.cep =
+          values.street && inputField.cep?.match(/^\d{5}-\d{3}$/)
+            ? ""
+            : "Please, enter a valid cep";
       }
     }
-    if("number" in inputField) {
-      if(inputField.number === "") {
+    if ("number" in inputField) {
+      if (inputField.number === "") {
         temp.number = "This field is required";
       } else {
         const tempNumber = parseFloat(inputField.number || "");
-        temp.number = tempNumber > 0 && Number.isInteger(tempNumber) ? "" : "Number should be an integer higher than 0";
+        temp.number =
+          tempNumber > 0 && Number.isInteger(tempNumber)
+            ? ""
+            : "Number should be an integer higher than 0";
       }
     }
 
     setErrors({ ...temp });
 
-    const isValid = Object.values(temp).every((x) => x === "") && Object.values(temp).length === 5;
-    if(isValid) {
+    const isValid =
+      Object.values(temp).every((x) => x === "") &&
+      Object.values(temp).length === 5;
+    if (isValid) {
       setButtonIsDisabled(false);
     } else {
       setButtonIsDisabled(true);
@@ -173,90 +188,99 @@ export default function Form(): JSX.Element {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <form onSubmit={handleSubmit}>
-        <Stack spacing="20px">
-          <TextField
-            label="Name"
-            name="name"
-            value={values.name}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={!!errors.name}
-            helperText={errors.name}
-          />
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={!!errors.email}
-            helperText={errors.email}
-          />
-          <DatePicker
-            label="Birthday"
-            value={values.birthday}
-            onChange={(date) => setValues({ ...values, birthday: date })}
-            disableFuture
-            clearable
-            openTo="year"
-            renderInput={(props) => (
-              <TextField
-                name="birthday"
-                onBlur={handleBlur}
-                helperText={errors.birthday}
-                {...props}
-              />
-            )}
-          />
-          <InputMask
-            mask="99999-999"
-            name="cep"
-            value={values.cep}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          >
-            {(props: JSX.IntrinsicAttributes & TextFieldProps) => (
-              <TextField
-                error={!!errors.cep}
-                helperText={errors.cep}
-                label="CEP"
-                {...props}
-              />
-            )}
-          </InputMask>
-          <TextField
-            disabled
-            label="Street"
-            name="street"
-            value={values.street}
-          />
-          <TextField
-            type="number"
-            label="Number"
-            name="number"
-            value={values.number}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={!!errors.number}
-            helperText={errors.number}
-          />
-          <TextField
-            label="Complement"
-            name="complement"
-            value={values.complement}
-            onChange={handleChange}
-          />
-          <TextField disabled label="City" name="city" value={values.city} />
-          <TextField disabled label="State" name="state" value={values.state} />
-          <Button
-            disabled={buttonIsDisabled}
-            variant="contained"
-            type="submit"
-            startIcon={<SaveOutlined />}
-          >
-            Save
-          </Button>
+        <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
+          <Stack spacing={2} width="100%">
+            <TextField
+              label="Name"
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={!!errors.name}
+              helperText={errors.name}
+            />
+            <TextField
+              label="Email"
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={!!errors.email}
+              helperText={errors.email}
+            />
+            <DatePicker
+              label="Birthday"
+              value={values.birthday}
+              onChange={(date) => setValues({ ...values, birthday: date })}
+              disableFuture
+              clearable
+              openTo="year"
+              renderInput={(props) => (
+                <TextField
+                  name="birthday"
+                  onBlur={handleBlur}
+                  helperText={errors.birthday}
+                  {...props}
+                />
+              )}
+            />
+            <InputMask
+              mask="99999-999"
+              name="cep"
+              value={values.cep}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            >
+              {(props: JSX.IntrinsicAttributes & TextFieldProps) => (
+                <TextField
+                  error={!!errors.cep}
+                  helperText={errors.cep}
+                  label="CEP"
+                  {...props}
+                />
+              )}
+            </InputMask>
+            <TextField
+              disabled
+              label="Street"
+              name="street"
+              value={values.street}
+            />
+          </Stack>
+          <Stack spacing={2} width="100%">
+            <TextField
+              type="number"
+              label="Number"
+              name="number"
+              value={values.number}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={!!errors.number}
+              helperText={errors.number}
+            />
+            <TextField
+              label="Complement"
+              name="complement"
+              value={values.complement}
+              onChange={handleChange}
+            />
+            <TextField disabled label="City" name="city" value={values.city} />
+            <TextField
+              disabled
+              label="State"
+              name="state"
+              value={values.state}
+            />
+            <Button
+              disabled={buttonIsDisabled}
+              variant="contained"
+              type="submit"
+              startIcon={<SaveOutlined />}
+            >
+              Save
+            </Button>
+          </Stack>
         </Stack>
       </form>
     </LocalizationProvider>
