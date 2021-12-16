@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Box, Grid } from "@mui/material";
+import { Typography, Box, Grid, Stack } from "@mui/material";
 import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
 import { getContactList, sortContactList } from "../utils/localStorageHandlers";
@@ -85,7 +85,9 @@ export default function Home(): JSX.Element {
           ))}
         </Grid>
       ) : (
-        "No contacts yet"
+        <Stack alignItems="center">
+          <Typography variant="h4">No contacts to show.</Typography>
+        </Stack>
       )}
     </>
   );
