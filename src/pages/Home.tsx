@@ -32,12 +32,12 @@ export default function Home(): JSX.Element {
         <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} justifyContent="space-around" flexWrap="wrap">
           {contacts.map(({ name, email }) => (
             <>
-              <ContactCardMobile display={{ xs: "flex", sm: "none" }} key={email} onClick={() => navigate(`/form/${email}`)}>
+              <ContactCardMobile display={{ xs: "flex", sm: "none" }} key={email} onClick={() => navigate(`/contact/${email}`)}>
                 <Typography sx={{ fontSize: "23px", ml: "15px" }}>
                   {name}
                 </Typography>
               </ContactCardMobile>
-              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} key={email} onClick={() => navigate(`/form/${email}`)}>
+              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} key={email} onClick={() => navigate(`/contact/${email}`)}>
                 <Typography sx={{ fontSize: "23px" }}>{name}</Typography>
                 <Typography sx={{ fontSize: "19px" }}>{email}</Typography>
               </ContactCardDesktop>
