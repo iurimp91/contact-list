@@ -5,7 +5,7 @@ function ContactCardBase(props: BoxProps) {
   return (
     <Box
       sx={{
-        display: "flex",
+        mt: "20px",
         alignItems: "center",
         backgroundColor: "#EDEDED",
         borderRadius: "10px",
@@ -21,19 +21,19 @@ function ContactCardBase(props: BoxProps) {
 
 function ContactCardMobile(props: BoxProps) {
   return (
-    <ContactCardBase height="50px" mt="20px" {...props}>
+    <ContactCardBase height="50px" {...props}>
       <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
       {props.children}
     </ContactCardBase>
   );
 }
 
-function ContactCardDesktop(children: JSX.Element) {
+function ContactCardDesktop(props: BoxProps) {
   return (
-    <ContactCardBase width="250px" height="100px">
+    <ContactCardBase ml="10px" width="250px" height="100px" {...props}>
       <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
       <Box ml="15px">
-        {children}
+        {props.children}
       </Box>
     </ContactCardBase>
   );
