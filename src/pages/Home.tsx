@@ -9,6 +9,7 @@ import { getContactList, sortContactList } from "../utils/localStorageHandlers";
 function DesktopCardText(props: TypographyProps) {
   return (
     <Typography
+      fontSize="21px"
       noWrap={true}
       sx={{
         width: "190px",
@@ -51,7 +52,7 @@ export default function Home(): JSX.Element {
                 </Typography>
               </ContactCardMobile>
               <ContactCardDesktop display={{ xs: "none", sm: "flex" }} onClick={() => navigate(`/contact/${email}`)}>
-                <DesktopCardText fontSize="21px">
+                <DesktopCardText>
                   {name}
                 </DesktopCardText>
                 <DesktopCardText fontSize="19px">
