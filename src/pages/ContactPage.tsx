@@ -49,7 +49,12 @@ export default function ContactPage(): JSX.Element {
 
   return (
     <Container maxWidth="sm">
-      <Box height="calc(100vh - 88px)">
+      <Box
+        p={{ xs: "0", sm: "15px" }}
+        boxShadow={{ xs:"none", sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
+        borderRadius="15px"
+        sx={{ backgroundColor: { xs: "inherit", sm: "#FFFFFF" } }}
+      >
         <Box display="flex" alignItems="center" mb="15px">
           <PersonOutlineOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
           <Typography
