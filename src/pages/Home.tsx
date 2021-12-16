@@ -55,15 +55,12 @@ export default function Home(): JSX.Element {
                 onClick={() => navigate(`/contact/${email}`)}
               >
                 <Typography
+                  noWrap={true}
                   sx={{
-                    fontSize: "23px",
+                    fontSize: "21px",
                     width: "190px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     ":hover": {
                       whiteSpace: "normal",
-                      overflow: "initial",
                       wordBreak: "break-all",
                     }
                   }}
@@ -71,17 +68,14 @@ export default function Home(): JSX.Element {
                   {name}
                 </Typography>
                 <Typography
+                  noWrap={true}
                   sx={{
                     fontSize: "19px",
                     width: "190px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     ":hover": {
                       whiteSpace: "normal",
-                      overflow: "initial",
                       wordBreak: "break-all",
-                    },
+                    }
                   }}
                 >
                   {email}
