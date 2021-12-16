@@ -1,7 +1,7 @@
 import { Box, BoxProps } from "@mui/material";
 import { ContactPageOutlined } from "@mui/icons-material";
 
-function ContactCardBase(props: BoxProps) {
+function ContactCardBase(props: BoxProps): JSX.Element {
   return (
     <Box
       sx={{
@@ -19,7 +19,7 @@ function ContactCardBase(props: BoxProps) {
   );
 }
 
-function ContactCardMobile(props: BoxProps) {
+function ContactCardMobile(props: BoxProps): JSX.Element {
   return (
     <ContactCardBase paddingY="5px" {...props}>
       <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
@@ -28,7 +28,7 @@ function ContactCardMobile(props: BoxProps) {
   );
 }
 
-function ContactCardDesktop(props: BoxProps) {
+function ContactCardDesktop(props: BoxProps): JSX.Element {
   return (
     <ContactCardBase width="270px" minHeight="100px" {...props}>
       <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />

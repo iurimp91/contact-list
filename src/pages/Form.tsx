@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Stack, TextField, Button, TextFieldProps } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
@@ -111,8 +110,6 @@ export default function Form(): JSX.Element {
 
     navigate("/");
   }
-
-  console.log(errors);
 
   function validateOnChange(inputField: Errors) {
     const temp: Errors = { ...errors };

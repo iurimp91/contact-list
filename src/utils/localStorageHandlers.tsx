@@ -8,11 +8,11 @@ function getContactByEmail(contactList: Contact[], email: string): Contact {
   return contactList.filter((contact) => contact.email === email)[0];
 }
 
-function setContactList(contactList: Contact[]) {
+function setContactList(contactList: Contact[]): void {
   localStorage.setItem("contacts", JSON.stringify(contactList));
 }
 
-function updateContactList(currentList: Contact[], newContact: Contact) {
+function updateContactList(currentList: Contact[], newContact: Contact): void {
   localStorage.setItem(
     "contacts",
     JSON.stringify([...currentList, newContact])
