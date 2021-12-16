@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Grid } from "@mui/material";
 import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
 import { getContactList, sortContactList } from "../utils/localStorageHandlers";
@@ -25,25 +25,25 @@ export default function Home(): JSX.Element {
 
   return (
     <>
-      <Box display={{ xs: "block", sm: "none" }}>
+      <Box display={{ xs: "block", sm: "none" }} mb="20px">
         <AddNewButton fullWidth onClick={() => navigate("/form")} />
       </Box>
       {contacts ? (
-        <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} justifyContent="space-around" flexWrap="wrap">
+        <Grid container spacing={3} direction={{ xs: "column", sm: "row" }} justifyContent="center">
           {contacts.map(({ name, email }) => (
-            <>
-              <ContactCardMobile display={{ xs: "flex", sm: "none" }} key={email} onClick={() => navigate(`/contact/${email}`)}>
+            <Grid item key={email}>
+              <ContactCardMobile display={{ xs: "flex", sm: "none" }} onClick={() => navigate(`/contact/${email}`)}>
                 <Typography sx={{ fontSize: "23px", ml: "15px" }}>
                   {name}
                 </Typography>
               </ContactCardMobile>
-              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} key={email} onClick={() => navigate(`/contact/${email}`)}>
+              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} onClick={() => navigate(`/contact/${email}`)}>
                 <Typography sx={{ fontSize: "23px" }}>{name}</Typography>
                 <Typography sx={{ fontSize: "19px" }}>{email}</Typography>
               </ContactCardDesktop>
-            </>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       ) : (
         "No contacts yet"
       )}
