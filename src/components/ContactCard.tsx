@@ -11,6 +11,7 @@ function ContactCardBase(props: BoxProps) {
         cursor: "pointer",
         ":hover": {
           backgroundColor: "#DBDBDB",
+          height: "100%",
         },
       }}
       {...props}
@@ -20,7 +21,7 @@ function ContactCardBase(props: BoxProps) {
 
 function ContactCardMobile(props: BoxProps) {
   return (
-    <ContactCardBase height="50px" {...props}>
+    <ContactCardBase paddingY="5px" {...props}>
       <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
       {props.children}
     </ContactCardBase>

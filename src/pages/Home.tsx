@@ -29,17 +29,63 @@ export default function Home(): JSX.Element {
         <AddNewButton fullWidth onClick={() => navigate("/form")} />
       </Box>
       {contacts ? (
-        <Grid container spacing={3} direction={{ xs: "column", sm: "row" }} justifyContent="center">
+        <Grid
+          container
+          spacing={3}
+          direction={{ xs: "column", sm: "row" }}
+          justifyContent="center"
+        >
           {contacts.map(({ name, email }) => (
             <Grid item key={email}>
-              <ContactCardMobile display={{ xs: "flex", sm: "none" }} onClick={() => navigate(`/contact/${email}`)}>
-                <Typography sx={{ fontSize: "23px", ml: "15px" }}>
+              <ContactCardMobile
+                display={{ xs: "flex", sm: "none" }}
+                onClick={() => navigate(`/contact/${email}`)}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "23px",
+                    wordBreak: "break-all",
+                  }}
+                >
                   {name}
                 </Typography>
               </ContactCardMobile>
-              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} onClick={() => navigate(`/contact/${email}`)}>
-                <Typography sx={{ fontSize: "23px" }}>{name}</Typography>
-                <Typography sx={{ fontSize: "19px" }}>{email}</Typography>
+              <ContactCardDesktop
+                display={{ xs: "none", sm: "flex" }}
+                onClick={() => navigate(`/contact/${email}`)}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "23px",
+                    width: "190px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    ":hover": {
+                      whiteSpace: "normal",
+                      overflow: "initial",
+                      wordBreak: "break-all",
+                    }
+                  }}
+                >
+                  {name}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "19px",
+                    width: "190px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    ":hover": {
+                      whiteSpace: "normal",
+                      overflow: "initial",
+                      wordBreak: "break-all",
+                    },
+                  }}
+                >
+                  {email}
+                </Typography>
               </ContactCardDesktop>
             </Grid>
           ))}
