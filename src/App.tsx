@@ -11,17 +11,28 @@ function Header(): JSX.Element {
 
   return (
     <AppBar position="fixed" sx={{ backgroundColor: "#FFFFFF" }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" px="10px">
-        <Typography sx={{ color: "#000000", textAlign: "center", fontSize: "26px" }}>
-          CONTACT LIST
-        </Typography>
-        <Box>
-          <AddNewButton sx={{ mr: "10px", display: { xs: "none", sm: "inline-flex" } }} onClick={() => navigate("/form")} />
-          <IconButton onClick={() => navigate("/")}>
-            <HomeOutlined sx={{ color: "#ED75EF" }} />
-          </IconButton>
+      <Container>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography
+            sx={{ color: "#000000", textAlign: "center", fontSize: "26px" }}
+          >
+            CONTACT LIST
+          </Typography>
+          <Box>
+            <AddNewButton
+              sx={{ mr: "10px", display: { xs: "none", sm: "inline-flex" } }}
+              onClick={() => navigate("/form")}
+            />
+            <IconButton onClick={() => navigate("/")}>
+              <HomeOutlined sx={{ color: "#ED75EF" }} />
+            </IconButton>
+          </Box>
         </Box>
-      </Box>
+      </Container>
     </AppBar>
   );
 }
@@ -30,7 +41,14 @@ function App(): JSX.Element {
   return (
     <>
       <Header />
-      <Container sx={{ backgroundColor: "#FAFAFA", pt: "68px", pb: "20px", minHeight: "100vh" }}>
+      <Container
+        sx={{
+          backgroundColor: "#FAFAFA",
+          pt: "68px",
+          pb: "20px",
+          minHeight: "100vh",
+        }}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact/:contactEmail" element={<ContactPage />} />

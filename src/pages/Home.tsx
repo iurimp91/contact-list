@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Typography, Box } from "@mui/material";
-import { ContactPageOutlined } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 import { useNavigate } from "react-router-dom";
 import { getContactList, sortContactList } from "../utils/localStorageHandlers";
 import AddNewButton from "../components/AddNewButton";
+import { ContactCardMobile, ContactCardDesktop } from "../components/ContactCard";
 
 export default function Home(): JSX.Element {
   const [contacts, setContacts] = useState<Contact[] | null>(null);
@@ -27,29 +27,11 @@ export default function Home(): JSX.Element {
       </Box>
       {contacts
         ? contacts.map(({ name, email }) => (
-          <Box
-            key={email}
-            sx={{
-              height: "50px",
-              backgroundColor: "#EDEDED",
-              borderRadius: "10px",
-              display: "flex",
-              alignItems: "center",
-              mt: "20px",
-              cursor: "pointer",
-              ":hover": {
-                backgroundColor: "#DBDBDB",
-              },
-            }}
-            onClick={() => navigate(`/contact/${email}`)}
-          >
-            <ContactPageOutlined
-              sx={{ fontSize: "40px", color: "#6AEFAB" }}
-            />
+          <ContactCardMobile key={email} onClick={() => navigate(`/form/${email}`)} >
             <Typography sx={{ fontSize: "23px", ml: "15px" }}>
               {name}
             </Typography>
-          </Box>
+          </ContactCardMobile>
         ))
         : "No contacts yet"}
     </>
