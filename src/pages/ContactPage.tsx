@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 import { getContactList, getContactByEmail, setContactList } from "../utils/localStorageHandlers";
+import dayjs from "dayjs";
 
 export default function ContactPage(): JSX.Element {
   const [contact, setContact] = useState<Contact>();
@@ -59,7 +60,7 @@ export default function ContactPage(): JSX.Element {
       <Box display="flex" alignItems="center" mb="15px">
         <CakeOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
         <Typography sx={{ fontSize: "20px", color: "#000000", ml: "10px" }}>
-          {contact?.birthday}
+          {dayjs(contact?.birthday).format("DD-MM-YYYY")}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" mt="30px">
