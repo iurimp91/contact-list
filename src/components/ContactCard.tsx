@@ -30,7 +30,7 @@ function ContactCardMobile(props: BoxProps) {
 
 function ContactCardDesktop(props: BoxProps) {
   return (
-    <ContactCardBase width="270px" height="100px" {...props}>
+    <ContactCardBase width="270px" minHeight="100px" {...props}>
       <ContactPageOutlined sx={{ fontSize: "40px", color: "#6AEFAB" }} />
       <Box ml="15px">
         {props.children}

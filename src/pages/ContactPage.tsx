@@ -23,15 +23,17 @@ export default function ContactPage(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!contactEmail) {
-      alert("Couldn't find the contact, please, try again.");
-      return;
-    }
+    if (!contactEmail) return;
 
     const contactList: Contact[] = getContactList();
 
     const contactData = getContactByEmail(contactList, contactEmail);
 
+    if(!contactData) {
+      alert("The contact couldn't be found, please, try again.");
+      navigate("/");
+    }
+    
     setContact(contactData);
   }, []);
 
