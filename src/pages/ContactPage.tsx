@@ -10,6 +10,7 @@ import {
   ModeEditOutline,
   DeleteOutline,
 } from "@mui/icons-material";
+import toast from "react-hot-toast";
 import Contact from "../interfaces/Contact";
 import {
   getContactList,
@@ -40,8 +41,8 @@ export default function ContactPage(): JSX.Element {
     const contactData = getContactByEmail(contactList, contactEmail);
 
     if (!contactData) {
-      alert("The contact couldn't be found, please, try again.");
-      navigate("/");
+      toast.error("The contact couldn't be found, please, try again.");
+      return navigate("/");
     }
 
     setContact(contactData);
@@ -56,6 +57,7 @@ export default function ContactPage(): JSX.Element {
 
     setContactList(arrayWithoutContact);
 
+    toast.success("The contact was deleted.");
     navigate("/");
   }
 

@@ -6,6 +6,7 @@ import InputMask from "react-input-mask";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import Contact from "../interfaces/Contact";
 import Errors from "../interfaces/Errors";
 import {
@@ -95,9 +96,11 @@ export default function Form(): JSX.Element {
 
     if (localStorage.getItem("contacts") === null) {
       setContactList([newContact]);
+      toast.success("Contact created!");
     } else if (!contactEmail) {
       const currentList: Contact[] = getContactList();
       updateContactList(currentList, newContact);
+      toast.success("Contact created!");
     } else {
       const contactList: Contact[] = getContactList();
 
@@ -106,6 +109,7 @@ export default function Form(): JSX.Element {
       );
 
       updateContactList(arrayWithoutContact, newContact);
+      toast.success("Contact updated!");
     }
 
     navigate("/");
