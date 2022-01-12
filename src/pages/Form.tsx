@@ -6,9 +6,14 @@ import { TextField, Stack, Button } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+
 const schema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
+  birthday: yup.date().required(),
 });
 
 export default function Form() {
@@ -25,36 +30,59 @@ export default function Form() {
     console.log(data);
   }
 
+  console.log(errors);
+
   return (
-    <form onSubmit={handleSubmit(formSubmitHandler)}>
-      <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
-        <Stack spacing={2} width="100%">
-          <TextField
-            {...register("name")}
-            name="name"
-            label="Name"
-            defaultValue=""
-            error={!!errors.name}
-            helperText={errors.name?.message}
-          />
-          <TextField
-            {...register("email")}
-            name="email"
-            type="email"
-            label="Email"
-            defaultValue=""
-            error={!!errors.email}
-            helperText={errors.email?.message}
-          />
-          <Button
-            variant="contained"
-            type="submit"
-            startIcon={<SaveOutlined />}
-          >
-            Save
-          </Button>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <form onSubmit={handleSubmit(formSubmitHandler)}>
+        <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
+          <Stack spacing={2} width="100%">
+            <TextField
+              {...register("name")}
+              label="Name"
+              defaultValue=""
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
+            <TextField
+              {...register("email")}
+              type="email"
+              label="Email"
+              defaultValue=""
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
+            <Controller
+              name="birthday"
+              control={control}
+              defaultValue={null}
+              render={({ field }) => (
+                <DatePicker
+                  label="Birthday"
+                  onChange={(e) => field.onChange(e)}
+                  value={field.value}
+                  clearable
+                  disableFuture
+                  openTo="year"
+                  renderInput={(params) => (
+                    <TextField
+                      helperText={errors.birthday?.message}
+                      {...params}
+                    />
+                  )}
+                />
+              )}
+            />
+            <Button
+              variant="contained"
+              type="submit"
+              startIcon={<SaveOutlined />}
+            >
+              Save
+            </Button>
+          </Stack>
         </Stack>
-      </Stack>
-    </form>
+      </form>
+    </LocalizationProvider>
   );
 }
