@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { TextField } from "@mui/material";
+import { TextField, Stack, Button } from "@mui/material";
+import { SaveOutlined } from "@mui/icons-material";
 import Contact from "../interfaces/Contact";
 
 const schema = yup.object().shape({
@@ -12,10 +13,8 @@ const schema = yup.object().shape({
 
 export default function Form() {
   const {
-    register,
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Contact>({
     resolver: yupResolver(schema),
@@ -27,36 +26,44 @@ export default function Form() {
 
   return (
     <form onSubmit={handleSubmit(formSubmitHandler)}>
-      <Controller
-        name="name"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Name"
-            error={!!errors.name}
-            helperText={errors.name?.message}
+      <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
+        <Stack spacing={2} width="100%">
+          <Controller
+            name="name"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Name"
+                error={!!errors.name}
+                helperText={errors.name?.message}
+              />
+            )}
           />
-        )}
-      />
-      <br />
-      <Controller
-        name="email"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            {...field}
-            type="email"
-            label="Email"
-            error={!!errors.email}
-            helperText={errors.email?.message}
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                type="email"
+                label="Email"
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
+            )}
           />
-        )}
-      />
-      <br />
-      <input type="submit" />
+          <Button
+            variant="contained"
+            type="submit"
+            startIcon={<SaveOutlined />}
+          >
+            Save
+          </Button>
+        </Stack>
+      </Stack>
     </form>
   );
 }

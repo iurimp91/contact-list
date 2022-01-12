@@ -28,7 +28,7 @@ const initialValues: Contact = {
   state: "",
 };
 
-export default function Form(): JSX.Element {
+export default function FormOld(): JSX.Element {
   const [values, setValues] = useState<Contact>(initialValues);
   const [errors, setErrors] = useState<Errors>({});
   const [buttonIsDisabled, setButtonIsDisabled] = useState<boolean>(true);
