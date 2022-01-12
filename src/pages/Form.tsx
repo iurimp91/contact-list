@@ -19,6 +19,8 @@ export default function Form() {
       <input defaultValue="" {...register("name")} />
       <br />
       <input defaultValue="" {...register("email", { required: true })} />
+      {errors.email && <span>This field is required</span>}
+      <br />
       <input type="submit" />
     </form>
   );
