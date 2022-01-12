@@ -13,7 +13,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 const schema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
-  birthday: yup.date().required(),
+  birthday: yup.date().min(new Date("01/01/1900")).max(new Date()).required(),
 });
 
 export default function Form() {
@@ -31,6 +31,7 @@ export default function Form() {
   }
 
   console.log(errors);
+  console.log(new Date());
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -64,6 +65,8 @@ export default function Form() {
                   clearable
                   disableFuture
                   openTo="year"
+                  views={["year", "month", "day"]}
+                  inputFormat="dd/MM/yyyy"
                   renderInput={(params) => (
                     <TextField
                       helperText={errors.birthday?.message}
