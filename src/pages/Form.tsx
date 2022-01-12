@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useForm, SubmitHandler } from "react-hook-form";
 import Contact from "../interfaces/Contact";
 
@@ -9,11 +10,16 @@ export default function Form() {
     formState: { errors },
   } = useForm<Contact>();
 
+  function formSubmitHandler(data: Contact): void {
+    console.log(data);
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(formSubmitHandler)}>
       <input defaultValue="" {...register("name")} />
       <br />
       <input defaultValue="" {...register("email", { required: true })} />
+      <input type="submit" />
     </form>
   );
 }
