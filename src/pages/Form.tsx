@@ -13,6 +13,7 @@ const schema = yup.object().shape({
 
 export default function Form() {
   const {
+    register,
     control,
     handleSubmit,
     formState: { errors },
@@ -28,32 +29,22 @@ export default function Form() {
     <form onSubmit={handleSubmit(formSubmitHandler)}>
       <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
         <Stack spacing={2} width="100%">
-          <Controller
+          <TextField
+            {...register("name")}
             name="name"
-            control={control}
+            label="Name"
             defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Name"
-                error={!!errors.name}
-                helperText={errors.name?.message}
-              />
-            )}
+            error={!!errors.name}
+            helperText={errors.name?.message}
           />
-          <Controller
+          <TextField
+            {...register("email")}
             name="email"
-            control={control}
+            type="email"
+            label="Email"
             defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type="email"
-                label="Email"
-                error={!!errors.email}
-                helperText={errors.email?.message}
-              />
-            )}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
           <Button
             variant="contained"
