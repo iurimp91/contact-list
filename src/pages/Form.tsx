@@ -16,9 +16,8 @@ const schema = yup.object().shape({
   birthday: yup.date().min(new Date("01/01/1900")).max(new Date()).required(),
 });
 
-export default function Form() {
+export default function Form(): JSX.Element {
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors },
@@ -38,20 +37,32 @@ export default function Form() {
       <form onSubmit={handleSubmit(formSubmitHandler)}>
         <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
           <Stack spacing={2} width="100%">
-            <TextField
-              {...register("name")}
-              label="Name"
+            <Controller
+              name="name"
+              control={control}
               defaultValue=""
-              error={!!errors.name}
-              helperText={errors.name?.message}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Name"
+                  error={!!errors.name}
+                  helperText={errors.name?.message}
+                />
+              )}
             />
-            <TextField
-              {...register("email")}
-              type="email"
-              label="Email"
+            <Controller
+              name="email"
+              control={control}
               defaultValue=""
-              error={!!errors.email}
-              helperText={errors.email?.message}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Email"
+                  type="email"
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                />
+              )}
             />
             <Controller
               name="birthday"
