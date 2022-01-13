@@ -19,6 +19,9 @@ const schema = yup.object().shape({
   cep: yup.string().matches(/^\d{5}-\d{3}$/).required(),
   street: yup.string().required(),
   number: yup.number().required(),
+  complement: yup.string().max(150),
+  city: yup.string().required(),
+  state: yup.string().required(),
 });
 
 export default function Form(): JSX.Element {
@@ -101,11 +104,13 @@ export default function Form(): JSX.Element {
               defaultValue=""
               render={({ field }) => (
                 <InputMask {...field} mask="99999-999">
-                  {() => (<TextField
-                    label="CEP"
-                    error={!!errors.cep}
-                    helperText={errors.cep?.message}
-                  />)}
+                  {() => (
+                    <TextField
+                      label="CEP"
+                      error={!!errors.cep}
+                      helperText={errors.cep?.message}
+                    />
+                  )}
                 </InputMask>
               )}
             />
@@ -117,6 +122,8 @@ export default function Form(): JSX.Element {
               helperText={errors.street?.message}
               disabled
             />
+          </Stack>
+          <Stack spacing={2} width="100%">
             <Controller
               name="number"
               control={control}
@@ -125,10 +132,40 @@ export default function Form(): JSX.Element {
                 <TextField
                   {...field}
                   label="Number"
+                  type="number"
                   error={!!errors.number}
                   helperText={errors.number?.message}
                 />
               )}
+            />
+            <Controller
+              name="complement"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Complement"
+                  error={!!errors.complement}
+                  helperText={errors.complement?.message}
+                />
+              )}
+            />
+            <TextField
+              {...register("city")}
+              label="City"
+              value={getValues("city")}
+              error={!!errors.city}
+              helperText={errors.city?.message}
+              disabled
+            />
+            <TextField
+              {...register("state")}
+              label="State"
+              value={getValues("state")}
+              error={!!errors.state}
+              helperText={errors.state?.message}
+              disabled
             />
             <Button
               variant="contained"
