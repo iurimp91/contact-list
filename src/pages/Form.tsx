@@ -10,14 +10,18 @@ import { DatePicker, LocalizationProvider } from "@mui/lab";
 
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
+import InputMask from "react-input-mask";
+
 const schema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
   birthday: yup.date().min(new Date("01/01/1900")).max(new Date()).required(),
+  cep: yup.string().matches(/^\d{5}-\d{3}$/).required(),
 });
 
 export default function Form(): JSX.Element {
   const {
+    watch,
     control,
     handleSubmit,
     formState: { errors },
@@ -30,7 +34,7 @@ export default function Form(): JSX.Element {
   }
 
   console.log(errors);
-  console.log(new Date());
+  console.log(watch("cep"));
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -85,6 +89,20 @@ export default function Form(): JSX.Element {
                     />
                   )}
                 />
+              )}
+            />
+            <Controller
+              name="cep"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <InputMask {...field} mask="99999-999">
+                  {() => (<TextField
+                    label="CEP"
+                    error={!!errors.cep}
+                    helperText={errors.cep?.message}
+                  />)}
+                </InputMask>
               )}
             />
             <Button
