@@ -14,8 +14,15 @@ import InputMask from "react-input-mask";
 
 import axios from "axios";
 import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import toast from "react-hot-toast";
+
+import {
+  getContactList,
+  setContactList,
+  updateContactList,
+} from "../utils/localStorageHandlers";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -40,6 +47,8 @@ export default function Form(): JSX.Element {
   } = useForm<Contact>({
     resolver: yupResolver(schema),
   });
+  const navigate = useNavigate();
+  const { contactEmail } = useParams();
 
   function resetAddressInputs() {
     setValue("street", "");
@@ -48,7 +57,31 @@ export default function Form(): JSX.Element {
   }
 
   function formSubmitHandler(data: Contact): void {
-    console.log(data);
+    const newContact: Contact = {
+      ...data,
+    };
+
+    console.log(newContact);
+
+    if (localStorage.getItem("contacts") === null) {
+      setContactList([newContact]);
+      toast.success("Contact created!");
+    } else if (!contactEmail) {
+      const currentList: Contact[] = getContactList();
+      updateContactList(currentList, newContact);
+      toast.success("Contact created!");
+    } else {
+      const contactList: Contact[] = getContactList();
+
+      const arrayWithoutContact = contactList.filter(
+        (contact) => contact.email !== contactEmail
+      );
+
+      updateContactList(arrayWithoutContact, newContact);
+      toast.success("Contact updated!");
+    }
+
+    navigate("/");
   }
 
   useEffect(() => {
