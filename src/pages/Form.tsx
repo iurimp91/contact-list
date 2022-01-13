@@ -14,7 +14,6 @@ import InputMask from "react-input-mask";
 
 import axios from "axios";
 import { useEffect } from "react";
-import { convertToObject } from "typescript";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -31,7 +30,6 @@ const schema = yup.object().shape({
 export default function Form(): JSX.Element {
   const {
     setValue,
-    register,
     getValues,
     watch,
     control,
@@ -142,14 +140,19 @@ export default function Form(): JSX.Element {
                 </InputMask>
               )}
             />
-            <TextField
-              {...register("street")}
-              label="Street"
+            <Controller
+              name="street"
+              control={control}
               defaultValue=""
-              value={getValues("street")}
-              error={!!errors.street}
-              helperText={errors.street?.message}
-              disabled
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Street"
+                  error={!!errors.street}
+                  helperText={errors.street?.message}
+                  disabled
+                />
+              )}
             />
           </Stack>
           <Stack spacing={2} width="100%">
@@ -180,23 +183,33 @@ export default function Form(): JSX.Element {
                 />
               )}
             />
-            <TextField
-              {...register("city")}
-              label="City"
+            <Controller
+              name="city"
+              control={control}
               defaultValue=""
-              value={getValues("city")}
-              error={!!errors.city}
-              helperText={errors.city?.message}
-              disabled
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="City"
+                  error={!!errors.city}
+                  helperText={errors.city?.message}
+                  disabled
+                />
+              )}
             />
-            <TextField
-              {...register("state")}
-              label="State"
+            <Controller
+              name="state"
+              control={control}
               defaultValue=""
-              value={getValues("state")}
-              error={!!errors.state}
-              helperText={errors.state?.message}
-              disabled
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="State"
+                  error={!!errors.state}
+                  helperText={errors.state?.message}
+                  disabled
+                />
+              )}
             />
             <Button
               variant="contained"
