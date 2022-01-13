@@ -17,10 +17,14 @@ const schema = yup.object().shape({
   email: yup.string().email().required(),
   birthday: yup.date().min(new Date("01/01/1900")).max(new Date()).required(),
   cep: yup.string().matches(/^\d{5}-\d{3}$/).required(),
+  street: yup.string().required(),
+  number: yup.number().required(),
 });
 
 export default function Form(): JSX.Element {
   const {
+    register,
+    getValues,
     watch,
     control,
     handleSubmit,
@@ -103,6 +107,27 @@ export default function Form(): JSX.Element {
                     helperText={errors.cep?.message}
                   />)}
                 </InputMask>
+              )}
+            />
+            <TextField
+              {...register("street")}
+              label="Street"
+              value={getValues("street")}
+              error={!!errors.street}
+              helperText={errors.street?.message}
+              disabled
+            />
+            <Controller
+              name="number"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Number"
+                  error={!!errors.number}
+                  helperText={errors.number?.message}
+                />
               )}
             />
             <Button
