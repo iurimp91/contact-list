@@ -21,13 +21,10 @@ const schema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
   birthday: yup.date().min(new Date("01/01/1900")).max(new Date()).required(),
-  cep: yup
-    .string()
-    .matches(/^\d{5}-\d{3}$/)
-    .required(),
+  cep: yup.string().matches(/^\d{5}-\d{3}$/).required(),
   street: yup.string().required(),
   number: yup.number().required(),
-  complement: yup.string().max(150),
+  complement: yup.string().max(50),
   city: yup.string().required(),
   state: yup.string().required(),
 });
@@ -46,7 +43,6 @@ export default function Form(): JSX.Element {
 
   function resetAddressInputs() {
     setValue("street", "");
-    setValue("complement", "");
     setValue("city", "");
     setValue("state", "");
   }
@@ -68,10 +64,9 @@ export default function Form(): JSX.Element {
         if (response.data.erro) {
           toast.error("This CEP doesn't exist, please, try again.");
         } else {
-          setValue("street", response.data.logradouro);
-          setValue("complement", response.data.complemento);
-          setValue("city", response.data.localidade);
-          setValue("state", response.data.uf);
+          setValue("street", response.data.logradouro, { shouldValidate: true });
+          setValue("city", response.data.localidade, { shouldValidate: true });
+          setValue("state", response.data.uf, { shouldValidate: true });
           toast.success("Address found!");
         }
       })
