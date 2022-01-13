@@ -12,6 +12,10 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import InputMask from "react-input-mask";
 
+import axios from "axios";
+import { useEffect } from "react";
+import { convertToObject } from "typescript";
+
 const schema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
@@ -26,6 +30,7 @@ const schema = yup.object().shape({
 
 export default function Form(): JSX.Element {
   const {
+    setValue,
     register,
     getValues,
     watch,
@@ -42,6 +47,29 @@ export default function Form(): JSX.Element {
 
   console.log(errors);
   console.log(watch("cep"));
+
+  useEffect(() => {
+    if (!getValues("cep").match(/^\d{5}-\d{3}$/)) {
+      return;
+    }
+
+    const cepWithoutMask = getValues("cep").replace("-", "");
+    axios
+      .get(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)
+      .then((response) => {
+        if (response.data.erro) {
+          alert("This CEP doesn't exist, please, try again.");
+        } else {
+          setValue("street", response.data.logradouro);
+          setValue("complement", response.data.complemento);
+          setValue("city", response.data.localidade);
+          setValue("state", response.data.uf);
+        }
+      })
+      .catch(() => {
+        alert("Something went wrong, please, try again.");
+      });
+  }, [watch("cep")]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -117,6 +145,7 @@ export default function Form(): JSX.Element {
             <TextField
               {...register("street")}
               label="Street"
+              defaultValue=""
               value={getValues("street")}
               error={!!errors.street}
               helperText={errors.street?.message}
@@ -154,6 +183,7 @@ export default function Form(): JSX.Element {
             <TextField
               {...register("city")}
               label="City"
+              defaultValue=""
               value={getValues("city")}
               error={!!errors.city}
               helperText={errors.city?.message}
@@ -162,6 +192,7 @@ export default function Form(): JSX.Element {
             <TextField
               {...register("state")}
               label="State"
+              defaultValue=""
               value={getValues("state")}
               error={!!errors.state}
               helperText={errors.state?.message}
