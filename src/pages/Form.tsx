@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -60,8 +59,6 @@ export default function Form(): JSX.Element {
     const newContact: Contact = {
       ...data,
     };
-
-    console.log(newContact);
 
     if (localStorage.getItem("contacts") === null) {
       setContactList([newContact]);
@@ -251,6 +248,7 @@ export default function Form(): JSX.Element {
               )}
             />
             <Button
+              disabled={Object.keys(errors).length !== 0}
               variant="contained"
               type="submit"
               startIcon={<SaveOutlined />}
