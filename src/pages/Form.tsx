@@ -49,6 +49,19 @@ const schema = yup.object().shape({
   state: yup.string().required(errorMessages.required.address),
 });
 
+const defaultValues = {
+  id: uuid(),
+  name: "",
+  email: "",
+  birthday: null,
+  cep: "",
+  street: "",
+  number: "",
+  complement: "",
+  city: "",
+  state: "",
+};
+
 export default function Form(): JSX.Element {
   const { contactEmail } = useParams();
   let contactData: Contact | undefined;
@@ -66,7 +79,7 @@ export default function Form(): JSX.Element {
     formState: { errors },
   } = useForm<Contact>({
     resolver: yupResolver(schema),
-    defaultValues: contactData
+    defaultValues: contactData || defaultValues,
   });
   const navigate = useNavigate();
   const [cepInputIsDisabled, setCepInputIsDisabled] = useState(false);
