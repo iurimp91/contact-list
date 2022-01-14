@@ -12,7 +12,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import InputMask from "react-input-mask";
 
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import toast from "react-hot-toast";
@@ -57,6 +57,7 @@ export default function Form(): JSX.Element {
   });
   const navigate = useNavigate();
   const { contactEmail } = useParams();
+  const [cepInputIsDisabled, setCepInputIsDisabled] = useState(false);
 
   function resetAddressInputs() {
     setValue("street", "");
@@ -91,25 +92,30 @@ export default function Form(): JSX.Element {
   }
 
   useEffect(() => {
-    if (!getValues("cep").match(/^\d{5}-\d{3}$/)) {
+    const cepMatchesPattern = getValues("cep").match(/^\d{5}-\d{3}$/);
+    if (!cepMatchesPattern) {
       resetAddressInputs();
       return;
     }
 
+    setCepInputIsDisabled(true);
     const cepWithoutMask = getValues("cep").replace("-", "");
     axios
       .get(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)
       .then((response) => {
         if (response.data.erro) {
+          setCepInputIsDisabled(false);
           toast.error("This CEP doesn't exist, please, try again.");
         } else {
           setValue("street", response.data.logradouro, { shouldValidate: true });
           setValue("city", response.data.localidade, { shouldValidate: true });
           setValue("state", response.data.uf, { shouldValidate: true });
+          setCepInputIsDisabled(false);
           toast.success("Address found!");
         }
       })
       .catch(() => {
+        setCepInputIsDisabled(false);
         toast.error("Something went wrong, please, try again.");
       });
   }, [watch("cep")]);
@@ -174,12 +180,13 @@ export default function Form(): JSX.Element {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <InputMask {...field} mask="99999-999">
+                <InputMask {...field} mask="99999-999" disabled={cepInputIsDisabled}>
                   {() => (
                     <TextField
                       label="CEP"
                       error={!!errors.cep}
                       helperText={errors.cep?.message}
+                      disabled={cepInputIsDisabled}
                     />
                   )}
                 </InputMask>
