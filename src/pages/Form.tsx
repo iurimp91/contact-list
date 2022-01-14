@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -19,6 +20,7 @@ import toast from "react-hot-toast";
 
 import {
   getContactList,
+  getContactByEmail,
   setContactList,
   updateContactList,
 } from "../utils/localStorageHandlers";
@@ -45,6 +47,18 @@ const schema = yup.object().shape({
 });
 
 export default function Form(): JSX.Element {
+  const { contactEmail } = useParams();
+  let contactData;
+
+  if(contactEmail) {
+    const contactList: Contact[] = getContactList();
+
+    contactData = getContactByEmail(contactList, contactEmail);
+    console.log(contactData);
+  }
+
+  console.log(contactEmail);
+
   const {
     setValue,
     getValues,
@@ -54,9 +68,9 @@ export default function Form(): JSX.Element {
     formState: { errors },
   } = useForm<Contact>({
     resolver: yupResolver(schema),
+    defaultValues: contactData 
   });
   const navigate = useNavigate();
-  const { contactEmail } = useParams();
   const [cepInputIsDisabled, setCepInputIsDisabled] = useState(false);
 
   function resetAddressInputs() {
