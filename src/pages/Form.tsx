@@ -29,12 +29,12 @@ import {
 } from "../utils/localStorageHandlers";
 
 const errorMessages = {
-  required: { standard: "This field is required, please fill it.", address: "This field is required, please enter a valid CEP to fill it." },
+  required: { standard: "Please, this field must be filled.", address: "Please, enter a valid CEP to fill this field automatically, it is required." },
   email: "Please, enter a valid email format.",
-  birthday: { type: "Please, enter a valid date format (DD/MM/YYYY).", min: "The date should be higher than 01/01/1900.", max: "The date shouldn't be higher than today." },
+  birthday: { type: "Please, enter a valid date format (DD/MM/YYYY).", min: "Please, enter a date greater than 01/01/1900.", max: "Please, enter a date from today or less." },
   cep: "Please, enter a valid CEP format (xxxxx-xxx).",
-  number: { type: "Please, use just numbers here.", min: "Number must be higher than 0." },
-  complement: "Please, use only 50 characters.",
+  number: { type: "Please, this field must be filled with a number.", min: "Please, the number must be higher than 0." },
+  complement: "Please, use a maximum of 50 characters.",
 };
 
 const schema = yup.object().shape({
