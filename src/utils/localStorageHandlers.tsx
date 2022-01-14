@@ -21,6 +21,16 @@ function updateContactList(currentList: Contact[], newContact: Contact): void {
   );
 }
 
+function updateContact(contactEmail: string, newContact: Contact) {
+  const contactList: Contact[] = getContactList();
+
+  const arrayWithoutContact = contactList.filter(
+    (contact) => contact.email !== contactEmail
+  );
+
+  updateContactList(arrayWithoutContact, newContact);
+}
+
 function sortContactList(contactList: Contact[]): void {
   contactList.sort((a: Contact, b: Contact) => {
     const nameA = a.name.toUpperCase();
@@ -32,4 +42,11 @@ function sortContactList(contactList: Contact[]): void {
   });
 }
 
-export { getContactList, getContactByEmail, setContactList, updateContactList, sortContactList };
+export {
+  getContactList,
+  getContactByEmail,
+  setContactList,
+  updateContactList,
+  updateContact,
+  sortContactList,
+};

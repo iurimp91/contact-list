@@ -23,6 +23,7 @@ import {
   getContactByEmail,
   setContactList,
   updateContactList,
+  updateContact,
 } from "../utils/localStorageHandlers";
 
 const errorMessages = {
@@ -87,13 +88,7 @@ export default function Form(): JSX.Element {
       updateContactList(currentList, newContact);
       toast.success("Contact created!");
     } else {
-      const contactList: Contact[] = getContactList();
-
-      const arrayWithoutContact = contactList.filter(
-        (contact) => contact.email !== contactEmail
-      );
-
-      updateContactList(arrayWithoutContact, newContact);
+      updateContact(contactEmail, newContact);
       toast.success("Contact updated!");
     }
 
