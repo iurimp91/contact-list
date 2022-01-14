@@ -22,24 +22,11 @@ import {
   updateContact,
 } from "../utils/localStorageHandlers";
 
-const defaultValues = {
-  id: uuid(),
-  name: "",
-  email: "",
-  birthday: null,
-  cep: "",
-  street: "",
-  number: "",
-  complement: "",
-  city: "",
-  state: "",
-};
-
 export default function Form(): JSX.Element {
   const { contactId } = useParams();
   let contactData: Contact | undefined;
 
-  if(contactId) {
+  if (contactId) {
     contactData = getContact(contactId);
   }
 
@@ -52,7 +39,18 @@ export default function Form(): JSX.Element {
     formState: { errors },
   } = useForm<Contact>({
     resolver: yupResolver(contactSchema),
-    defaultValues: contactData || defaultValues,
+    defaultValues: contactData || {
+      id: uuid(),
+      name: "",
+      email: "",
+      birthday: null,
+      cep: "",
+      street: "",
+      number: "",
+      complement: "",
+      city: "",
+      state: "",
+    },
   });
   const navigate = useNavigate();
   const [cepInputIsDisabled, setCepInputIsDisabled] = useState(false);
@@ -99,7 +97,9 @@ export default function Form(): JSX.Element {
           toast.dismiss(loadingToastId);
           toast.error("This CEP doesn't exist, please, try again.");
         } else {
-          setValue("street", response.data.logradouro, { shouldValidate: true });
+          setValue("street", response.data.logradouro, {
+            shouldValidate: true,
+          });
           setValue("city", response.data.localidade, { shouldValidate: true });
           setValue("state", response.data.uf, { shouldValidate: true });
           setCepInputIsDisabled(false);
@@ -170,7 +170,11 @@ export default function Form(): JSX.Element {
               name="cep"
               control={control}
               render={({ field }) => (
-                <InputMask {...field} mask="99999-999" disabled={cepInputIsDisabled}>
+                <InputMask
+                  {...field}
+                  mask="99999-999"
+                  disabled={cepInputIsDisabled}
+                >
                   {() => (
                     <TextField
                       label="CEP"
