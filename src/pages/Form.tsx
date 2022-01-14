@@ -22,11 +22,9 @@ import { v4 as uuid } from "uuid";
 
 import {
   getContactList,
-  getContactByEmail,
-  getContactById,
+  getContact,
   setContactList,
   updateContactList,
-  updateContactById,
   updateContact,
 } from "../utils/localStorageHandlers";
 
@@ -69,7 +67,7 @@ export default function Form(): JSX.Element {
   let contactData: Contact | undefined;
 
   if(contactId) {
-    contactData = getContactById(contactId);
+    contactData = getContact(contactId);
   }
 
   const {
@@ -105,7 +103,7 @@ export default function Form(): JSX.Element {
       updateContactList(currentList, newContact);
       toast.success("Contact created!");
     } else {
-      updateContactById(contactId, newContact);
+      updateContact(contactId, newContact);
       toast.success("Contact updated!");
     }
 

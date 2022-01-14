@@ -4,13 +4,7 @@ function getContactList(): Contact[] {
   return JSON.parse(localStorage.getItem("contacts") || "null");
 }
 
-function getContactByEmail(email: string): Contact {
-  const contactList = getContactList();
-
-  return contactList.filter((contact) => contact.email === email)[0];
-}
-
-function getContactById(id: string): Contact {
+function getContact(id: string): Contact {
   const contactList = getContactList();
 
   return contactList.filter((contact) => contact.id === id)[0];
@@ -24,17 +18,7 @@ function updateContactList(currentList: Contact[], newContact: Contact): void {
   localStorage.setItem("contacts", JSON.stringify([...currentList, newContact]));
 }
 
-function updateContact(contactEmail: string, newContact: Contact): void {
-  const contactList: Contact[] = getContactList();
-
-  const arrayWithoutContact = contactList.filter(
-    (contact) => contact.email !== contactEmail
-  );
-
-  updateContactList(arrayWithoutContact, newContact);
-}
-
-function updateContactById(id: string, newContact: Contact): void {
+function updateContact(id: string, newContact: Contact): void {
   const contactList: Contact[] = getContactList();
 
   const arrayWithoutContact = contactList.filter(
@@ -57,11 +41,9 @@ function sortContactList(contactList: Contact[]): void {
 
 export {
   getContactList,
-  getContactByEmail,
-  getContactById,
+  getContact,
   setContactList,
   updateContactList,
   updateContact,
-  updateContactById,
   sortContactList,
 };

@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 import Contact from "../interfaces/Contact";
 import {
   getContactList,
-  getContactById,
+  getContact,
   setContactList,
 } from "../utils/localStorageHandlers";
 
@@ -36,7 +36,7 @@ export default function ContactPage(): JSX.Element {
   useEffect(() => {
     if (!contactId) return navigate("/");
 
-    const contactData = getContactById(contactId);
+    const contactData = getContact(contactId);
 
     if (!contactData) {
       toast.error("The contact couldn't be found, please, try again.");
