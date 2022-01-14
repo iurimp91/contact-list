@@ -21,6 +21,7 @@ import {
   updateContactList,
   updateContact,
 } from "../utils/localStorageHandlers";
+import TextInput from "../components/TextInput";
 
 export default function Form(): JSX.Element {
   const { contactId } = useParams();
@@ -119,31 +120,33 @@ export default function Form(): JSX.Element {
       <form onSubmit={handleSubmit(formSubmitHandler)}>
         <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
           <Stack spacing={2} width="100%">
-            <Controller
+            {/* <Controller
               name="name"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <TextField
                   {...field}
                   label="Name"
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
                 />
               )}
-            />
-            <Controller
+            /> */}
+            <TextInput control={control} name="name" />
+            <TextInput control={control} name="email" type="email" />
+            {/* <Controller
               name="email"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <TextField
                   {...field}
                   label="Email"
                   type="email"
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
                 />
               )}
-            />
+            /> */}
             <Controller
               name="birthday"
               control={control}
