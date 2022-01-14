@@ -23,16 +23,25 @@ import {
   updateContactList,
 } from "../utils/localStorageHandlers";
 
+const errorMessages = {
+  required: { standard: "This field is required, please fill it.", address: "This field is required, please enter a valid CEP to fill it." },
+  email: "Please, enter a valid email format.",
+  birthday: { type: "Please, enter a valid date format (DD/MM/YYYY).", min: "The date should be higher than 01/01/1900.", max: "The date shouldn't be higher than today." },
+  cep: "Please, enter a valid CEP format (xxxxx-xxx).",
+  number: { type: "Please, use just numbers here.", min: "Number must be higher than 0." },
+  complement: "Please, use only 50 characters.",
+};
+
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  email: yup.string().email().required(),
-  birthday: yup.date().min(new Date("01/01/1900")).max(new Date()).required(),
-  cep: yup.string().matches(/^\d{5}-\d{3}$/).required(),
-  street: yup.string().required(),
-  number: yup.number().required(),
-  complement: yup.string().max(50),
-  city: yup.string().required(),
-  state: yup.string().required(),
+  name: yup.string().required(errorMessages.required.standard),
+  email: yup.string().email(errorMessages.email).required(errorMessages.required.standard),
+  birthday: yup.date().typeError(errorMessages.birthday.type).min(new Date("01/01/1900"), errorMessages.birthday.min).max(new Date(), errorMessages.birthday.max).required(),
+  cep: yup.string().matches(/^\d{5}-\d{3}$/, errorMessages.cep).required(),
+  street: yup.string().required(errorMessages.required.address),
+  number: yup.number().typeError(errorMessages.number.type).required(errorMessages.required.standard),
+  complement: yup.string().max(50, errorMessages.complement),
+  city: yup.string().required(errorMessages.required.address),
+  state: yup.string().required(errorMessages.required.address),
 });
 
 export default function Form(): JSX.Element {
