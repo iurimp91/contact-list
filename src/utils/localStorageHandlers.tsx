@@ -4,7 +4,9 @@ function getContactList(): Contact[] {
   return JSON.parse(localStorage.getItem("contacts") || "null");
 }
 
-function getContactByEmail(contactList: Contact[], email: string): Contact {
+function getContactByEmail(email: string): Contact {
+  const contactList = getContactList();
+
   return contactList.filter((contact) => contact.email === email)[0];
 }
 

@@ -36,9 +36,7 @@ export default function ContactPage(): JSX.Element {
   useEffect(() => {
     if (!contactEmail) return;
 
-    const contactList: Contact[] = getContactList();
-
-    const contactData = getContactByEmail(contactList, contactEmail);
+    const contactData = getContactByEmail(contactEmail);
 
     if (!contactData) {
       toast.error("The contact couldn't be found, please, try again.");

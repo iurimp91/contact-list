@@ -48,16 +48,11 @@ const schema = yup.object().shape({
 
 export default function Form(): JSX.Element {
   const { contactEmail } = useParams();
-  let contactData;
+  let contactData: Contact | undefined;
 
   if(contactEmail) {
-    const contactList: Contact[] = getContactList();
-
-    contactData = getContactByEmail(contactList, contactEmail);
-    console.log(contactData);
+    contactData = getContactByEmail(contactEmail);
   }
-
-  console.log(contactEmail);
 
   const {
     setValue,

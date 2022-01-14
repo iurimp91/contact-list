@@ -68,9 +68,7 @@ export default function FormOld(): JSX.Element {
   useEffect(() => {
     if (!contactEmail) return;
 
-    const contactList: Contact[] = getContactList();
-
-    const contactData = getContactByEmail(contactList, contactEmail);
+    const contactData = getContactByEmail(contactEmail);
 
     setValues({ ...contactData });
     setErrors({ name: "", email: "", birthday: "", cep: "", number: "" });
