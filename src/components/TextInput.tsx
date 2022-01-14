@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useController, UseControllerProps } from "react-hook-form";
 
 import { TextField } from "@mui/material";
@@ -12,8 +11,6 @@ interface InputProps extends UseControllerProps<Contact> {
 
 export default function TextInput(props: InputProps): JSX.Element {
   const { field, fieldState } = useController(props);
-
-  console.log(props.type);
 
   return (
     <TextField

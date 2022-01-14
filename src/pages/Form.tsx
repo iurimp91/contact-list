@@ -120,33 +120,8 @@ export default function Form(): JSX.Element {
       <form onSubmit={handleSubmit(formSubmitHandler)}>
         <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
           <Stack spacing={2} width="100%">
-            {/* <Controller
-              name="name"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  label="Name"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            /> */}
             <TextInput control={control} name="name" />
             <TextInput control={control} name="email" type="email" />
-            {/* <Controller
-              name="email"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  label="Email"
-                  type="email"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            /> */}
             <Controller
               name="birthday"
               control={control}
@@ -189,72 +164,13 @@ export default function Form(): JSX.Element {
                 </InputMask>
               )}
             />
-            <Controller
-              name="street"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Street"
-                  error={!!errors.street}
-                  helperText={errors.street?.message}
-                  disabled
-                />
-              )}
-            />
+            <TextInput control={control} name="street" disabled />
           </Stack>
           <Stack spacing={2} width="100%">
-            <Controller
-              name="number"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Number"
-                  type="number"
-                  error={!!errors.number}
-                  helperText={errors.number?.message}
-                />
-              )}
-            />
-            <Controller
-              name="complement"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Complement"
-                  error={!!errors.complement}
-                  helperText={errors.complement?.message}
-                />
-              )}
-            />
-            <Controller
-              name="city"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="City"
-                  error={!!errors.city}
-                  helperText={errors.city?.message}
-                  disabled
-                />
-              )}
-            />
-            <Controller
-              name="state"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="State"
-                  error={!!errors.state}
-                  helperText={errors.state?.message}
-                  disabled
-                />
-              )}
-            />
+            <TextInput control={control} name="number" type="number" />
+            <TextInput control={control} name="complement" />
+            <TextInput control={control} name="city" disabled />
+            <TextInput control={control} name="state" disabled />
             <Button
               disabled={Object.keys(errors).length !== 0}
               variant="contained"
