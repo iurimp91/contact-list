@@ -53,9 +53,9 @@ function App(): JSX.Element {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact/:contactEmail" element={<ContactPage />} />
+          <Route path="/contact/:contactId" element={<ContactPage />} />
           <Route path="/form" element={<Form />} />
-          <Route path="/form/:contactEmail" element={<Form />} />
+          <Route path="/form/:contactId" element={<Form />} />
         </Routes>
       </Container>
     </>
