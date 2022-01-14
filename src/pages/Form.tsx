@@ -23,8 +23,10 @@ import { v4 as uuid } from "uuid";
 import {
   getContactList,
   getContactByEmail,
+  getContactById,
   setContactList,
   updateContactList,
+  updateContactById,
   updateContact,
 } from "../utils/localStorageHandlers";
 

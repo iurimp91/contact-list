@@ -10,6 +10,12 @@ function getContactByEmail(email: string): Contact {
   return contactList.filter((contact) => contact.email === email)[0];
 }
 
+function getContactById(id: string): Contact {
+  const contactList = getContactList();
+
+  return contactList.filter((contact) => contact.id === id)[0];
+}
+
 function setContactList(contactList: Contact[]): void {
   localStorage.setItem("contacts", JSON.stringify(contactList));
 }
@@ -23,6 +29,16 @@ function updateContact(contactEmail: string, newContact: Contact): void {
 
   const arrayWithoutContact = contactList.filter(
     (contact) => contact.email !== contactEmail
+  );
+
+  updateContactList(arrayWithoutContact, newContact);
+}
+
+function updateContactById(id: string, newContact: Contact): void {
+  const contactList: Contact[] = getContactList();
+
+  const arrayWithoutContact = contactList.filter(
+    (contact) => contact.id !== id
   );
 
   updateContactList(arrayWithoutContact, newContact);
@@ -42,8 +58,10 @@ function sortContactList(contactList: Contact[]): void {
 export {
   getContactList,
   getContactByEmail,
+  getContactById,
   setContactList,
   updateContactList,
   updateContact,
+  updateContactById,
   sortContactList,
 };
