@@ -15,13 +15,10 @@ function setContactList(contactList: Contact[]): void {
 }
 
 function updateContactList(currentList: Contact[], newContact: Contact): void {
-  localStorage.setItem(
-    "contacts",
-    JSON.stringify([...currentList, newContact])
-  );
+  localStorage.setItem("contacts", JSON.stringify([...currentList, newContact]));
 }
 
-function updateContact(contactEmail: string, newContact: Contact) {
+function updateContact(contactEmail: string, newContact: Contact): void {
   const contactList: Contact[] = getContactList();
 
   const arrayWithoutContact = contactList.filter(
