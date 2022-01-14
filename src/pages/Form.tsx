@@ -64,9 +64,7 @@ export default function Form(): JSX.Element {
   }
 
   function formSubmitHandler(data: Contact): void {
-    const newContact: Contact = {
-      ...data,
-    };
+    const newContact: Contact = { ...data };
 
     if (localStorage.getItem("contacts") === null) {
       setContactList([newContact]);
@@ -90,6 +88,7 @@ export default function Form(): JSX.Element {
       return;
     }
 
+    const loadingToastId = toast.loading("Getting address...");
     setCepInputIsDisabled(true);
     const cepWithoutMask = getValues("cep").replace("-", "");
     axios
@@ -97,17 +96,20 @@ export default function Form(): JSX.Element {
       .then((response) => {
         if (response.data.erro) {
           setCepInputIsDisabled(false);
+          toast.dismiss(loadingToastId);
           toast.error("This CEP doesn't exist, please, try again.");
         } else {
           setValue("street", response.data.logradouro, { shouldValidate: true });
           setValue("city", response.data.localidade, { shouldValidate: true });
           setValue("state", response.data.uf, { shouldValidate: true });
           setCepInputIsDisabled(false);
+          toast.dismiss(loadingToastId);
           toast.success("Address found!");
         }
       })
       .catch(() => {
         setCepInputIsDisabled(false);
+        toast.dismiss(loadingToastId);
         toast.error("Something went wrong, please, try again.");
       });
   }, [watch("cep")]);
