@@ -18,6 +18,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import toast from "react-hot-toast";
 
+import { v4 as uuid } from "uuid";
+
 import {
   getContactList,
   getContactByEmail,
@@ -64,7 +66,7 @@ export default function Form(): JSX.Element {
     formState: { errors },
   } = useForm<Contact>({
     resolver: yupResolver(schema),
-    defaultValues: contactData 
+    defaultValues: contactData
   });
   const navigate = useNavigate();
   const [cepInputIsDisabled, setCepInputIsDisabled] = useState(false);
