@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Typography, Box, Grid, Stack, TypographyProps } from "@mui/material";
+
 import Contact from "../interfaces/Contact";
+import { getContactList, sortContactList } from "../utils/localStorageHandlers";
 import AddNewButton from "../components/AddNewButton";
 import { ContactCardMobile, ContactCardDesktop } from "../components/ContactCard";
-import { getContactList, sortContactList } from "../utils/localStorageHandlers";
 
 function DesktopCardText(props: TypographyProps) {
   return (

@@ -1,25 +1,19 @@
-/* eslint-disable no-console */
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { TextField, Stack, Button } from "@mui/material";
-import { SaveOutlined } from "@mui/icons-material";
-import Contact from "../interfaces/Contact";
-
-import { DatePicker, LocalizationProvider } from "@mui/lab";
-
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-
-import InputMask from "react-input-mask";
-
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { useForm, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
-
+import InputMask from "react-input-mask";
+import axios from "axios";
 import { v4 as uuid } from "uuid";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
+import { TextField, Stack, Button } from "@mui/material";
+import { SaveOutlined } from "@mui/icons-material";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+
+import Contact from "../interfaces/Contact";
 import {
   getContactList,
   getContact,

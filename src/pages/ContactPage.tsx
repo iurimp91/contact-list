@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import dayjs from "dayjs";
+
 import { Box, Typography, Button, Container, TypographyProps } from "@mui/material";
 import {
   PersonOutlineOutlined,
@@ -10,13 +12,9 @@ import {
   ModeEditOutline,
   DeleteOutline,
 } from "@mui/icons-material";
-import toast from "react-hot-toast";
+
 import Contact from "../interfaces/Contact";
-import {
-  getContactList,
-  getContact,
-  setContactList,
-} from "../utils/localStorageHandlers";
+import { getContactList, getContact, setContactList } from "../utils/localStorageHandlers";
 
 function ContactPageText(props: TypographyProps) {
   return (

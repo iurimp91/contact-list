@@ -1,7 +1,9 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
 import { AppBar, Typography, Container, Box, IconButton } from "@mui/material";
 import { HomeOutlined } from "@mui/icons-material";
-import { Toaster } from "react-hot-toast";
+
 import Home from "./pages/Home";
 import ContactPage from "./pages/ContactPage";
 import Form from "./pages/Form";
