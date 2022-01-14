@@ -44,14 +44,14 @@ export default function Home(): JSX.Element {
       </Box>
       {contacts ? (
         <Grid container spacing={3} direction={{ xs: "column", sm: "row" }} justifyContent="center">
-          {contacts.map(({ name, email }) => (
-            <Grid item key={email}>
-              <ContactCardMobile display={{ xs: "flex", sm: "none" }} onClick={() => navigate(`/contact/${email}`)}>
+          {contacts.map(({ id, name, email }) => (
+            <Grid item key={id}>
+              <ContactCardMobile display={{ xs: "flex", sm: "none" }} onClick={() => navigate(`/contact/${id}`)}>
                 <Typography sx={{ fontSize: "23px", wordBreak: "break-all" }}>
                   {name}
                 </Typography>
               </ContactCardMobile>
-              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} onClick={() => navigate(`/contact/${email}`)}>
+              <ContactCardDesktop display={{ xs: "none", sm: "flex" }} onClick={() => navigate(`/contact/${id}`)}>
                 <DesktopCardText>
                   {name}
                 </DesktopCardText>
