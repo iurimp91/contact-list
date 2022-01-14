@@ -38,7 +38,7 @@ const schema = yup.object().shape({
   birthday: yup.date().typeError(errorMessages.birthday.type).min(new Date("01/01/1900"), errorMessages.birthday.min).max(new Date(), errorMessages.birthday.max).required(),
   cep: yup.string().matches(/^\d{5}-\d{3}$/, errorMessages.cep).required(),
   street: yup.string().required(errorMessages.required.address),
-  number: yup.number().typeError(errorMessages.number.type).required(errorMessages.required.standard),
+  number: yup.number().typeError(errorMessages.number.type).min(1, errorMessages.number.min).required(errorMessages.required.standard),
   complement: yup.string().max(50, errorMessages.complement),
   city: yup.string().required(errorMessages.required.address),
   state: yup.string().required(errorMessages.required.address),
