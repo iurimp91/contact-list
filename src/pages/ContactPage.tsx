@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 import Contact from "../interfaces/Contact";
 import {
   getContactList,
-  getContactByEmail,
+  getContactById,
   setContactList,
 } from "../utils/localStorageHandlers";
 
@@ -30,13 +30,13 @@ function ContactPageText(props: TypographyProps) {
 
 export default function ContactPage(): JSX.Element {
   const [contact, setContact] = useState<Contact>();
-  const { contactEmail } = useParams();
+  const { contactId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!contactEmail) return;
+    if (!contactId) return navigate("/");
 
-    const contactData = getContactByEmail(contactEmail);
+    const contactData = getContactById(contactId);
 
     if (!contactData) {
       toast.error("The contact couldn't be found, please, try again.");
@@ -50,7 +50,7 @@ export default function ContactPage(): JSX.Element {
     const contactList: Contact[] = getContactList();
 
     const arrayWithoutContact = contactList.filter(
-      (contact) => contact.email !== contactEmail
+      (contact) => contact.id !== contactId
     );
 
     setContactList(arrayWithoutContact);
