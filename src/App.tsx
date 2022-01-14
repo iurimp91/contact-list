@@ -5,7 +5,6 @@ import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import ContactPage from "./pages/ContactPage";
 import Form from "./pages/Form";
-import FormOld from "./pages/FormOld";
 import AddNewButton from "./components/AddNewButton";
 
 function Header(): JSX.Element {
@@ -56,7 +55,6 @@ function App(): JSX.Element {
           <Route path="/" element={<Home />} />
           <Route path="/contact/:contactEmail" element={<ContactPage />} />
           <Route path="/form" element={<Form />} />
-          <Route path="/formold" element={<FormOld />} />
           <Route path="/form/:contactEmail" element={<Form />} />
         </Routes>
       </Container>
