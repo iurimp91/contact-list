@@ -109,7 +109,7 @@ export default function ContactPage(): JSX.Element {
           fullWidth
           sx={{ mt: "20px" }}
           startIcon={<ModeEditOutline />}
-          onClick={() => navigate(`/form/${contact?.email}`)}
+          onClick={() => navigate(`/form/${contact?.id}`)}
         >
           EDIT
         </Button>

@@ -65,11 +65,11 @@ const defaultValues = {
 };
 
 export default function Form(): JSX.Element {
-  const { contactEmail } = useParams();
+  const { contactId } = useParams();
   let contactData: Contact | undefined;
 
-  if(contactEmail) {
-    contactData = getContactByEmail(contactEmail);
+  if(contactId) {
+    contactData = getContactById(contactId);
   }
 
   const {
@@ -100,12 +100,12 @@ export default function Form(): JSX.Element {
     if (localStorage.getItem("contacts") === null) {
       setContactList([newContact]);
       toast.success("Contact created!");
-    } else if (!contactEmail) {
+    } else if (!contactId) {
       const currentList: Contact[] = getContactList();
       updateContactList(currentList, newContact);
       toast.success("Contact created!");
     } else {
-      updateContact(contactEmail, newContact);
+      updateContactById(contactId, newContact);
       toast.success("Contact updated!");
     }
 
