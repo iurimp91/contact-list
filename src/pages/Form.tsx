@@ -127,7 +127,7 @@ export default function Form(): JSX.Element {
               control={control}
               render={({ field }) => (
                 <DatePicker
-                  label="Birthday"
+                  label="BIRTHDAY"
                   onChange={(e) => field.onChange(e)}
                   value={field.value}
                   clearable
