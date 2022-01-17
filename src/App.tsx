@@ -23,7 +23,7 @@ function Header(): JSX.Element {
             CONTACT LIST
           </Typography>
           <Box>
-            {pathname === "/form" ? (
+            {pathname.includes("/form") ? (
               ""
             ) : (
               <AddNewButton
