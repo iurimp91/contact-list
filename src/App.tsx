@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { AppBar, Typography, Container, Box, IconButton } from "@mui/material";
@@ -11,25 +11,26 @@ import AddNewButton from "./components/AddNewButton";
 
 function Header(): JSX.Element {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   return (
     <AppBar position="fixed" sx={{ backgroundColor: "#FFFFFF" }}>
       <Container>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography
             sx={{ color: "#000000", textAlign: "center", fontSize: "26px" }}
           >
             CONTACT LIST
           </Typography>
           <Box>
-            <AddNewButton
-              sx={{ mr: "10px", display: { xs: "none", sm: "inline-flex" } }}
-              onClick={() => navigate("/form")}
-            />
+            {pathname === "/form" ? (
+              ""
+            ) : (
+              <AddNewButton
+                sx={{ mr: "10px", display: { xs: "none", sm: "inline-flex" } }}
+                onClick={() => navigate("/form")}
+              />
+            )}
             <IconButton onClick={() => navigate("/")}>
               <HomeOutlined sx={{ color: "#ED75EF" }} />
             </IconButton>
