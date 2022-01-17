@@ -16,7 +16,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "plugin:cypress/recommended0"],
+  "plugins": ["react", "@typescript-eslint", "plugin:cypress/recommended"],
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
