@@ -9,9 +9,10 @@ function ContactCardBase(props: BoxProps): JSX.Element {
         backgroundColor: "#EDEDED",
         borderRadius: "10px",
         cursor: "pointer",
+        transition: "all ease 200ms",
         ":hover": {
-          backgroundColor: "#DBDBDB",
-          height: "100%",
+          minHeight: { xs: "100%", sm: "110px" },
+          boxShadow: "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px"
         },
       }}
       {...props}
