@@ -12,17 +12,17 @@ describe("Form tests", () => {
     it("gets error status when form is submitted with it empty", () => {
       cy.get("button[type=submit]").click();
 
-      cy.get("#name-input").next().should("have.css", "border-color").and("equal", "rgb(211, 47, 47)");
+      cy.react("TextInput", { props: { name: "name" } }).children().should("have.css", "border-color").and("equal", "rgb(211, 47, 47)");
 
-      cy.get("label").contains("NAME").parent().should("contain", "Please, this field must be filled.");
+      cy.react("TextInput", { props: { name: "name" } }).should("contain", "Please, this field must be filled.");
     });
 
     it("accepts strings as its value", () => {
-      cy.get("#name-input").type("Test").should("have.value", "Test");
+      cy.react("TextInput", { props: { name: "name" } }).type("Test").find("input").should("have.value", "Test");
 
       cy.get("button[type=submit]").click();
 
-      cy.get("label").contains("NAME").parent().find("p").should("not.exist");
+      cy.react("TextInput", { props: { name: "name" } }).find("p").should("not.exist");
     });
   });
 
