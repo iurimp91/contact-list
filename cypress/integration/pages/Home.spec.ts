@@ -13,7 +13,7 @@ describe("Homepage tests", () => {
   });
 
   it("renders a contact card when a contact is added", () => {
-    cy.addContact();
+    cy.contains("ADD NEW").click().addContact();
 
     cy.react("ContactCard*").should("exist");
   });

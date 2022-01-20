@@ -25,9 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("addContact", () => {
-  cy.contains("ADD NEW")
-    .click()
-    .get("#name-input")
+  cy.get("#name-input")
     .type("Test")
     .get("#email-input")
     .type("test@test.com")
