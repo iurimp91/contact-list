@@ -115,9 +115,6 @@ export default function Form(): JSX.Element {
       });
   }, [watch("cep")]);
 
-  // eslint-disable-next-line no-console
-  console.log(errors);
-
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <form onSubmit={handleSubmit(formSubmitHandler)}>
