@@ -1,11 +1,11 @@
-describe("Homepage", () => {
+describe("Homepage tests", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.waitForReact();
   });
   
   it("renders the Header component", () => {
-    cy.get("Header").should("exist");
+    cy.react("Header").should("exist");
   });
 
   it("shows no contact message if contacts list is empty", () => {
