@@ -14,7 +14,7 @@ function Header(): JSX.Element {
   const { pathname } = useLocation();
 
   return (
-    <AppBar id="header" position="fixed" sx={{ backgroundColor: "#FFFFFF" }}>
+    <AppBar position="fixed" sx={{ backgroundColor: "#FFFFFF" }}>
       <Container>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography
