@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { TextField, Stack, Button } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
-import { DatePicker, LocalizationProvider } from "@mui/lab";
+import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import { contactSchema } from "../schemas/contactSchema";
@@ -21,7 +21,7 @@ import {
   updateContactList,
   updateContact,
 } from "../utils/localStorageHandlers";
-import TextInput from "../components/TextInput";
+import { TextInput, DateInput } from "../components/Inputs";
 
 export default function Form(): JSX.Element {
   const { contactId } = useParams();
@@ -115,6 +115,9 @@ export default function Form(): JSX.Element {
       });
   }, [watch("cep")]);
 
+  // eslint-disable-next-line no-console
+  console.log(errors);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <form onSubmit={handleSubmit(formSubmitHandler)}>
@@ -122,29 +125,7 @@ export default function Form(): JSX.Element {
           <Stack spacing={2} width="100%">
             <TextInput control={control} name="name" />
             <TextInput control={control} name="email" type="email" />
-            <Controller
-              name="birthday"
-              control={control}
-              render={({ field }) => (
-                <DatePicker
-                  label="BIRTHDAY"
-                  onChange={(e) => field.onChange(e)}
-                  value={field.value}
-                  clearable
-                  disableFuture
-                  openTo="year"
-                  views={["year", "month", "day"]}
-                  inputFormat="dd/MM/yyyy"
-                  renderInput={(params) => (
-                    <TextField
-                      id="birthday-input"
-                      helperText={errors.birthday?.message}
-                      {...params}
-                    />
-                  )}
-                />
-              )}
-            />
+            <DateInput control={control} name="birthday" />
             <Controller
               name="cep"
               control={control}
