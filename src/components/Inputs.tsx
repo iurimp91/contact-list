@@ -16,7 +16,6 @@ function TextInput(props: InputProps): JSX.Element {
   return (
     <TextField
       {...field}
-      id={`${props.name}-input`}
       label={props.name.toUpperCase()}
       type={props.type}
       disabled={props.disabled}
