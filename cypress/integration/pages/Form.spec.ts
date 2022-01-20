@@ -19,5 +19,9 @@ describe("Form tests", () => {
     
       cy.get("label").contains("NAME").parent().should("contain", "Please, this field must be filled.");
     });
+
+    it("accepts strings as its value", () => {
+      cy.get("#name-input").type("Test").should("have.value", "Test");
+    });
   });
 });
