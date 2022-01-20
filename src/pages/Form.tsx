@@ -137,6 +137,7 @@ export default function Form(): JSX.Element {
                   inputFormat="dd/MM/yyyy"
                   renderInput={(params) => (
                     <TextField
+                      id="birthday-input"
                       helperText={errors.birthday?.message}
                       {...params}
                     />
@@ -151,14 +152,15 @@ export default function Form(): JSX.Element {
                 <InputMask
                   {...field}
                   mask="99999-999"
-                  disabled={cepInputIsDisabled}
+                  disabled={cepInputIsDisabled} //TODO VERIFY IF THIS IS NEEDED
                 >
                   {() => (
                     <TextField
+                      id="cep-input"
                       label="CEP"
                       error={!!errors.cep}
                       helperText={errors.cep?.message}
-                      disabled={cepInputIsDisabled}
+                      disabled={cepInputIsDisabled} //TODO VERIFY IF THIS IS NEEDED
                     />
                   )}
                 </InputMask>
@@ -172,7 +174,7 @@ export default function Form(): JSX.Element {
             <TextInput control={control} name="city" disabled />
             <TextInput control={control} name="state" disabled />
             <Button
-              disabled={Object.keys(errors).length !== 0}
+              disabled={Object.keys(errors).length !== 0 || cepInputIsDisabled}
               variant="contained"
               type="submit"
               startIcon={<SaveOutlined />}

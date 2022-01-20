@@ -41,6 +41,7 @@ function Header(): JSX.Element {
   );
 }
 
+// TODO FIX MARGIN TOP AND LEFT AND LOOSE SCROLLING Y
 function App(): JSX.Element {
   return (
     <>

@@ -23,3 +23,20 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("addContact", () => {
+  cy.contains("ADD NEW")
+    .click()
+    .get("#name-input")
+    .type("Test")
+    .get("#email-input")
+    .type("test@test.com")
+    .get("#birthday-input")
+    .type("01/01/2010")
+    .get("#cep-input")
+    .type("01001000")
+    .get("#number-input")
+    .type("1")
+    .get("button[type=submit]")
+    .click();
+});
