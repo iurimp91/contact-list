@@ -1,7 +1,13 @@
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-import { AppBar, Typography, Container, Box, IconButton } from "@mui/material";
+import {
+  AppBar,
+  Typography,
+  Box,
+  IconButton,
+  Toolbar,
+} from "@mui/material";
 import { HomeOutlined } from "@mui/icons-material";
 
 import Home from "./pages/Home";
@@ -14,12 +20,10 @@ function Header(): JSX.Element {
   const { pathname } = useLocation();
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: "#FFFFFF" }}>
-      <Container>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography
-            sx={{ color: "#000000", textAlign: "center", fontSize: "26px" }}
-          >
+    <>
+      <AppBar sx={{ background: "#FFFFFF" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }} >
+          <Typography sx={{ color: "#000000", textAlign: "center", fontSize: "30px" }}>
             CONTACT LIST
           </Typography>
           <Box>
@@ -27,17 +31,19 @@ function Header(): JSX.Element {
               ""
             ) : (
               <AddNewButton
+                size="large"
                 sx={{ mr: "10px", display: { xs: "none", sm: "inline-flex" } }}
                 onClick={() => navigate("/form")}
               />
             )}
-            <IconButton onClick={() => navigate("/")}>
+            <IconButton size="large" onClick={() => navigate("/")}>
               <HomeOutlined sx={{ color: "#ED75EF" }} />
             </IconButton>
           </Box>
-        </Box>
-      </Container>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+    </>
   );
 }
 
@@ -47,21 +53,15 @@ function App(): JSX.Element {
     <>
       <Toaster />
       <Header />
-      <Container
-        sx={{
-          backgroundColor: "#FAFAFA",
-          pt: "68px",
-          pb: "20px",
-          minHeight: "100vh",
-        }}
-      >
+      <Box
+        sx={{ backgroundColor: "#FAFAFA", py: "20px", px: "20px", height: "calc(100vh - 64px)" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact/:contactId" element={<ContactPage />} />
           <Route path="/form" element={<Form />} />
           <Route path="/form/:contactId" element={<Form />} />
         </Routes>
-      </Container>
+      </Box>
     </>
   );
 }
