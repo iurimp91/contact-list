@@ -54,7 +54,7 @@ function App(): JSX.Element {
       <Toaster />
       <Header />
       <Box
-        sx={{ backgroundColor: "#FAFAFA", py: "20px", px: "20px", maxHeight: "calc(100vh - 64px)" }}>
+        sx={{ backgroundColor: "#FAFAFA", px: "20px", height: "calc(100vh - 64px)" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact/:contactId" element={<ContactPage />} />
